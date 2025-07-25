@@ -79,4 +79,5 @@ const notFound = (req, res, next) => {
   next(error);
 };
 
-module.exports = { errorHandler, asyncHandler, notFound };
+// ES6 exports instead of CommonJS
+export { errorHandler, asyncHandler, notFound };

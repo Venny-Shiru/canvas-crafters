@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const canvasSchema = new mongoose.Schema({
   title: {
@@ -202,4 +202,5 @@ canvasSchema.statics.findByUser = function(userId, includeCollaborations = false
     .sort({ lastModified: -1 });
 };
 
-module.exports = mongoose.model('Canvas', canvasSchema);
+const Canvas = mongoose.model('Canvas', canvasSchema);
+export default Canvas;

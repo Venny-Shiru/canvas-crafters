@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 const auth = async (req, res, next) => {
   try {
@@ -97,7 +97,8 @@ const requireAdmin = (req, res, next) => {
 const checkCanvasPermission = (requiredPermission = 'view') => {
   return async (req, res, next) => {
     try {
-      const Canvas = require('../models/Canvas');
+      // Dynamic import to avoid circular dependency issues
+      const { default: Canvas } = await import('../models/Canvas.js');
       const canvasId = req.params.id || req.params.canvasId;
       
       const canvas = await Canvas.findById(canvasId);
@@ -137,7 +138,7 @@ const checkCanvasPermission = (requiredPermission = 'view') => {
   };
 };
 
-module.exports = {
+export {
   auth,
   optionalAuth,
   requireAdmin,

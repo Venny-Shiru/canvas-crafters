@@ -244,7 +244,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact & Support
 
 - **GitHub**: [@Venny-Shiru](https://github.com/Venny-Shiru)
-- **Email**: [your-email@canvas-crafters.com]
+- **Email**: [vennywanjiru@gmail.com]
 - **Project Link**: [https://github.com/Venny-Shiru/canvas-crafters](https://github.com/Venny-Shiru/canvas-crafters)
 
 ---

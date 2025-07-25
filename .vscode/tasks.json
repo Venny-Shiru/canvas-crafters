@@ -1,0 +1,43 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Start Client Dev Server",
+			"command": "npm",
+			"args": ["run", "client:dev"],
+			"group": "build",
+			"isBackground": true,
+			"options": {
+				"shell": {
+					"executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+					"args": ["-c"]
+				}
+			},
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "Start Server Dev",
+			"command": "nodemon server/index.js",
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "Start Full Dev Environment",
+			"command": "npm",
+			"args": ["run", "dev"],
+			"group": "build",
+			"isBackground": true,
+			"options": {
+				"shell": {
+					"executable": "C:\\Program Files\\Git\\bin\\bash.exe",
+					"args": ["-c"]
+				}
+			},
+			"problemMatcher": []
+		}
+	]
+}

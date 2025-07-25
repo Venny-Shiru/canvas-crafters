@@ -1,73 +1,252 @@
-# Welcome to your Lovable project
+# Canvas Crafters 🎨
 
-## Project info
+## Create. Collaborate. Craft Together.
 
-**URL**: https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449
+Canvas Crafters is a real-time collaborative digital canvas platform that enables artists, designers, and creative teams to work together seamlessly. Built with modern web technologies, it offers professional drawing tools with the power of real-time collaboration.
 
-## How can I edit this code?
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+### 🎨 **Professional Drawing Tools**
+- Complete suite of digital art tools
+- Brush engine with pressure sensitivity
+- Layer management system
+- Vector and raster support
+- Color palettes and gradients
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449) and start prompting.
+### 👥 **Real-time Collaboration**
+- Multiple users editing simultaneously
+- Live cursor tracking
+- User presence indicators
+- Real-time chat and comments
+- Permission management (view/edit)
 
-Changes made via Lovable will be committed automatically to this repo.
+### ⚡ **Performance & Reliability**
+- Zero-latency collaboration engine
+- Auto-save every 30 seconds
+- Conflict resolution system
+- Undo/redo with branching
+- WebRTC for low-latency communication
 
-**Use your preferred IDE**
+### 🌐 **Universal Access**
+- Works on any device with a web browser
+- Responsive design for mobile and desktop
+- One-click sharing with customizable permissions
+- Export to multiple formats
+- Public gallery showcase
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Quick Start
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Node.js (v16 or higher)
+- npm or yarn
+- MongoDB (local or cloud instance)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Clone the repository
+git clone https://github.com/Venny-Shiru/canvas-crafters.git
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Navigate to project directory
+cd canvas-crafters
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at:
+- **Frontend**: http://localhost:5173
+- **Backend**: http://localhost:5000
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🛠️ Technology Stack
 
-**Use GitHub Codespaces**
+### Frontend
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Socket.io Client** - Real-time communication
+- **React Router** - Navigation
+- **React Query** - Data fetching and caching
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - Database
+- **Mongoose** - ODM for MongoDB
+- **Socket.io** - Real-time communication
+- **JWT** - Authentication
+- **bcryptjs** - Password hashing
 
-## What technologies are used for this project?
+### DevOps & Tools
+- **ESLint** - Code linting
+- **Nodemon** - Development server
+- **Concurrently** - Run multiple processes
+- **Git** - Version control
 
-This project is built with:
+## 📁 Project Structure
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+canvas-crafters/
+├── client/                 # Frontend React application
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── contexts/       # React contexts (Auth, etc.)
+│   │   ├── pages/          # Application pages
+│   │   └── main.tsx        # Entry point
+│   ├── index.html
+│   └── vite.config.ts
+├── server/                 # Backend Node.js application
+│   ├── config/             # Database and app configuration
+│   ├── middleware/         # Express middleware
+│   ├── models/             # Mongoose models
+│   ├── routes/             # API routes
+│   ├── sockets/            # Socket.io handlers
+│   └── index.js            # Server entry point
+├── .env                    # Environment variables
+└── package.json            # Project dependencies and scripts
+```
 
-## How can I deploy this project?
+## 🎯 Usage
 
-Simply open [Lovable](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449) and click on Share -> Publish.
+### For Artists & Designers
+1. **Sign up** for a free account
+2. **Create** a new canvas
+3. **Invite** collaborators via email or share link
+4. **Draw** together in real-time
+5. **Export** your masterpiece
 
-## Can I connect a custom domain to my Lovable project?
+### For Teams
+1. **Set up** team workspace
+2. **Organize** projects and canvases
+3. **Collaborate** with advanced permissions
+4. **Track** progress with analytics
 
-Yes, you can!
+### For Educators
+1. **Create** classroom canvases
+2. **Assign** group projects
+3. **Monitor** student progress
+4. **Showcase** student work
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🔧 Available Scripts
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+# Development
+npm run dev              # Start both client and server
+npm run client:dev       # Start only frontend
+npm run server:dev       # Start only backend
+
+# Production
+npm run build           # Build for production
+npm run server          # Start production server
+npm run preview         # Preview production build
+
+# Code Quality
+npm run lint            # Run ESLint
+```
+
+## 🌍 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Server Configuration
+NODE_ENV=development
+PORT=5000
+
+# Database
+MONGODB_URI=mongodb://localhost:27017/canvas-crafters
+
+# JWT Secret
+JWT_SECRET=your-super-secret-jwt-key
+
+# Client URL (for CORS)
+CLIENT_URL=http://localhost:5173
+
+# Frontend Environment Variables (for Vite)
+VITE_API_URL=http://localhost:5000/api
+VITE_SOCKET_URL=http://localhost:5000
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 API Documentation
+
+### Authentication Endpoints
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/profile` - Get user profile
+
+### Canvas Endpoints
+- `GET /api/canvas` - List user canvases
+- `POST /api/canvas` - Create new canvas
+- `GET /api/canvas/:id` - Get canvas details
+- `PUT /api/canvas/:id` - Update canvas
+- `DELETE /api/canvas/:id` - Delete canvas
+
+### User Endpoints
+- `GET /api/users/profile` - Get user profile
+- `PUT /api/users/profile` - Update user profile
+
+## 🔒 Security Features
+
+- JWT-based authentication
+- Rate limiting and DDoS protection
+- Input validation and sanitization
+- HTTPS/WSS encryption
+- CORS configuration
+- Helmet.js security headers
+
+## 🚀 Deployment
+
+### Using Lovable (Recommended)
+1. Visit [Lovable Project](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449)
+2. Click on Share → Publish
+3. Your app will be deployed automatically
+
+### Manual Deployment
+The application can be deployed on any platform that supports Node.js:
+- Heroku
+- Vercel
+- Netlify
+- DigitalOcean
+- AWS
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Lovable](https://lovable.dev) - AI-powered web development
+- Icons by [Lucide React](https://lucide.dev)
+- UI components inspired by modern design systems
+
+## 📞 Contact & Support
+
+- **GitHub**: [@Venny-Shiru](https://github.com/Venny-Shiru)
+- **Email**: [your-email@canvas-crafters.com]
+- **Project Link**: [https://github.com/Venny-Shiru/canvas-crafters](https://github.com/Venny-Shiru/canvas-crafters)
+
+---
+
+**Made with ❤️ for the creative community**

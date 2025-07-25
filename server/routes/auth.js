@@ -1,9 +1,9 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
-const User = require('../models/User');
-const { auth } = require('../middleware/auth');
-const { asyncHandler } = require('../middleware/errorHandler');
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import { body, validationResult } from 'express-validator';
+import User from '../models/User.js';
+import { auth } from '../middleware/auth.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
 
 const router = express.Router();
 
@@ -313,4 +313,4 @@ router.post('/refresh', auth, asyncHandler(async (req, res) => {
   }
 }));
 
-module.exports = router;
+export default router;

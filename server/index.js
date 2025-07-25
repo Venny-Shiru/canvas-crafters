@@ -11,7 +11,7 @@ import connectDB from './config/database.js';
 import authRoutes from './routes/auth.js';
 import canvasRoutes from './routes/canvas.js';
 import userRoutes from './routes/user.js';
-import errorHandler from './middleware/errorHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
 import canvasSocket from './sockets/canvasSocket.js';
 
 // Load environment variables

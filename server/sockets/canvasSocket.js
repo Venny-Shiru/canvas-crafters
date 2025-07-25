@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const Canvas = require('../models/Canvas');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
+import Canvas from '../models/Canvas.js';
 
 // Store active users and their canvas sessions
 const activeUsers = new Map();
@@ -328,4 +328,4 @@ const canvasSocket = (io) => {
   }, 10 * 60 * 1000); // Check every 10 minutes
 };
 
-module.exports = canvasSocket;
+export default canvasSocket;

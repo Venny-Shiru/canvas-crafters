@@ -1,9 +1,9 @@
-const express = require('express');
-const { body, validationResult, query } = require('express-validator');
-const Canvas = require('../models/Canvas');
-const User = require('../models/User');
-const { auth, optionalAuth, checkCanvasPermission } = require('../middleware/auth');
-const { asyncHandler } = require('../middleware/errorHandler');
+import express from 'express';
+import { body, validationResult, query } from 'express-validator';
+import Canvas from '../models/Canvas.js';
+import User from '../models/User.js';
+import { auth, optionalAuth, checkCanvasPermission } from '../middleware/auth.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
 
 const router = express.Router();
 
@@ -388,4 +388,4 @@ router.post('/:id/like', auth, checkCanvasPermission('view'), asyncHandler(async
   }
 }));
 
-module.exports = router;
+export default router;

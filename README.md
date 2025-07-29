@@ -218,18 +218,48 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## 🚀 Deployment
 
-### Using Lovable (Recommended)
-1. Visit [Lovable Project](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449)
-2. Click on Share → Publish
-3. Your app will be deployed automatically
+### Recommended Setup: Vercel + Railway + MongoDB Atlas
 
-### Manual Deployment
-The application can be deployed on any platform that supports Node.js:
-- Heroku
-- Vercel
-- Netlify
-- DigitalOcean
-- AWS
+**Frontend (Vercel):**
+1. Connect your GitHub repository to Vercel
+2. Set the root directory to `client`
+3. Vercel will auto-detect Vite and deploy
+4. Add environment variables in Vercel dashboard
+
+**Backend (Railway):**
+1. Connect your GitHub repository to Railway
+2. Railway will auto-detect Node.js and deploy
+3. Add environment variables in Railway dashboard
+4. Your backend will be available at `https://your-app.railway.app`
+
+**Database (MongoDB Atlas):**
+1. Create a free MongoDB Atlas cluster
+2. Get the connection string
+3. Add it to Railway environment variables
+
+### Environment Variables Setup
+
+**Vercel Environment Variables:**
+```env
+VITE_API_URL=https://your-railway-backend.railway.app/api
+VITE_SOCKET_URL=https://your-railway-backend.railway.app
+VITE_APP_NAME=Canvas Crafters
+```
+
+**Railway Environment Variables:**
+```env
+NODE_ENV=production
+MONGODB_URI=mongodb+srv://your-atlas-connection-string
+JWT_SECRET=your-super-secret-jwt-key
+CLIENT_URL=https://your-vercel-app.vercel.app
+SOCKET_CORS_ORIGIN=https://your-vercel-app.vercel.app
+```
+
+### Alternative Deployment Options
+- **Lovable**: Visit [Lovable Project](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449) → Share → Publish
+- **Netlify**: For frontend deployment
+- **Render**: Full-stack deployment alternative
+- **Heroku**: Traditional PaaS option
 
 ## 📄 License
 

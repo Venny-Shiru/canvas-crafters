@@ -6,6 +6,7 @@ import { resolve } from 'path';
 export default defineConfig({
   root: './client',
   plugins: [react()],
+  base: '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, './client/src'),
@@ -17,5 +18,9 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true
+  },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
   }
 });

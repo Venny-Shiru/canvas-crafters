@@ -8,7 +8,7 @@ Canvas Crafters is a real-time collaborative digital canvas platform that enable
 [![Backend API](https://img.shields.io/badge/API-Live-green?style=for-the-badge)](https://web-production-a1b2.up.railway.app)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-🌐 **Live Application**: [https://canvas-crafters-git-main-venny-shiru.vercel.app](https://canvas-crafters-git-main-venny-shiru.vercel.app)
+🌐 **Live Application**: [https://canvas-crafters-git-main-venny-shiru.vercel.app](https://canvas-crafters.vercel.app/)
 
 🚀 **API Endpoint**: [https://web-production-a1b2.up.railway.app](https://web-production-a1b2.up.railway.app)
 

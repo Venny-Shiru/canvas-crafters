@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Eye, EyeOff, Palette, AlertCircle, CheckCircle, X } from 'lucide-react';
 
 const Register: React.FC = () => {
   const { register, state, clearError } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -25,6 +27,14 @@ const Register: React.FC = () => {
   useEffect(() => {
     clearError();
   }, [clearError]);
+
+  // Redirect after successful authentication
+  useEffect(() => {
+    if (state.isAuthenticated && !state.isLoading) {
+      const from = (location.state as any)?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
+    }
+  }, [state.isAuthenticated, state.isLoading, navigate, location]);
 
   // Clear field-specific errors when user starts typing
   useEffect(() => {

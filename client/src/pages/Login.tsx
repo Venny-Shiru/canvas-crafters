@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Eye, EyeOff, Palette, AlertCircle } from 'lucide-react';
 
 const Login: React.FC = () => {
   const { login, state, clearError } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     identifier: '',
     password: ''
@@ -22,6 +24,14 @@ const Login: React.FC = () => {
       setErrors({});
     }
   }, [formData]);
+
+  // Redirect after successful authentication
+  useEffect(() => {
+    if (state.isAuthenticated && !state.isLoading) {
+      const from = (location.state as any)?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
+    }
+  }, [state.isAuthenticated, state.isLoading, navigate, location]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};

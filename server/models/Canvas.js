@@ -122,12 +122,12 @@ const canvasSchema = new mongoose.Schema({
 
 // Virtual for like count
 canvasSchema.virtual('likeCount').get(function() {
-  return this.likes.length;
+  return this.likes ? this.likes.length : 0;
 });
 
 // Virtual for collaborator count
 canvasSchema.virtual('collaboratorCount').get(function() {
-  return this.collaborators.length;
+  return this.collaborators ? this.collaborators.length : 0;
 });
 
 // Indexes for better query performance

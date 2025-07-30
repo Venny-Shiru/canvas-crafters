@@ -8,6 +8,13 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Explore from './pages/Explore';
+import NewCanvas from './pages/NewCanvas';
+import CanvasEditor from './pages/CanvasEditor';
+import Settings from './pages/Settings';
+import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -42,12 +49,7 @@ function App() {
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Dashboard</h1>
-                      <p className="text-gray-600">Coming soon - User dashboard with canvas management</p>
-                    </div>
-                  </div>
+                  <Dashboard />
                 </ProtectedRoute>
               } 
             />
@@ -56,12 +58,7 @@ function App() {
               path="/explore" 
               element={
                 <ProtectedRoute>
-                  <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Explore Canvases</h1>
-                      <p className="text-gray-600">Coming soon - Browse public canvases from the community</p>
-                    </div>
-                  </div>
+                  <Explore />
                 </ProtectedRoute>
               } 
             />
@@ -70,12 +67,7 @@ function App() {
               path="/canvas/new" 
               element={
                 <ProtectedRoute>
-                  <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Create New Canvas</h1>
-                      <p className="text-gray-600">Coming soon - Advanced canvas creation with drawing tools</p>
-                    </div>
-                  </div>
+                  <NewCanvas />
                 </ProtectedRoute>
               } 
             />
@@ -83,13 +75,15 @@ function App() {
             <Route 
               path="/canvas/:id" 
               element={
+                <CanvasEditor />
+              } 
+            />
+
+            <Route 
+              path="/canvas/:id/edit" 
+              element={
                 <ProtectedRoute>
-                  <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Canvas Viewer</h1>
-                      <p className="text-gray-600">Coming soon - View and collaborate on canvases</p>
-                    </div>
-                  </div>
+                  <CanvasEditor />
                 </ProtectedRoute>
               } 
             />
@@ -98,46 +92,18 @@ function App() {
               path="/settings" 
               element={
                 <ProtectedRoute>
-                  <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-4">Settings</h1>
-                      <p className="text-gray-600">Coming soon - User profile and account settings</p>
-                    </div>
-                  </div>
+                  <Settings />
                 </ProtectedRoute>
               } 
             />
 
             <Route 
               path="/profile/:username" 
-              element={
-                <div className="min-h-screen flex items-center justify-center">
-                  <div className="text-center">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4">User Profile</h1>
-                    <p className="text-gray-600">Coming soon - User profiles with canvas galleries</p>
-                  </div>
-                </div>
-              } 
+              element={<Profile />} 
             />
 
             {/* 404 Route */}
-            <Route 
-              path="*" 
-              element={
-                <div className="min-h-screen flex items-center justify-center">
-                  <div className="text-center">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">404</h1>
-                    <p className="text-gray-600 mb-4">Page not found</p>
-                    <a 
-                      href="/" 
-                      className="text-blue-600 hover:text-blue-700 font-medium"
-                    >
-                      Go back home
-                    </a>
-                  </div>
-                </div>
-              } 
-            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </Router>

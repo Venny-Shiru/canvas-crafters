@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
 
 // Virtual for user's full name (if needed later)
 userSchema.virtual('canvasCount').get(function() {
-  return this.canvases.length;
+  return this.canvases ? this.canvases.length : 0;
 });
 
 // Index for better query performance

@@ -104,13 +104,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   // Create API headers
-  const getHeaders = (includeAuth = false) => {
+  const getHeaders = (includeAuth = false, token?: string) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
 
-    if (includeAuth && state.token) {
-      headers.Authorization = `Bearer ${state.token}`;
+    const authToken = token || state.token;
+    if (includeAuth && authToken) {
+      headers.Authorization = `Bearer ${authToken}`;
     }
 
     return headers;
@@ -128,7 +129,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       try {
         const response = await fetch(`${API_BASE_URL}/auth/me`, {
-          headers: getHeaders(true),
+          headers: getHeaders(true, token),
         });
 
         if (response.ok) {

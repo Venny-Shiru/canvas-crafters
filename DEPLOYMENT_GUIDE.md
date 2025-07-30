@@ -160,9 +160,16 @@ After deployment, you'll have:
 - Ensure database user has correct permissions
 
 **Build Failures:**
+- **"vite: command not found"**: Fixed with updated vercel.json configuration
 - Check that all environment variables are set
 - Verify build commands are correct
 - Check logs in Railway/Vercel dashboards
+- Ensure `client/package.json` exists with proper dependencies
+
+**Git Issues:**
+- If `git pull` stalls: Try `git fetch` first, then `git pull`
+- Network issues: Check internet connection
+- Authentication: Ensure GitHub credentials are valid
 
 **Socket.io Connection Issues:**
 - Ensure `VITE_SOCKET_URL` points to your Railway backend

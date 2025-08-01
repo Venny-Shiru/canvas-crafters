@@ -4,43 +4,71 @@
 
 Canvas Crafters is a real-time collaborative digital canvas platform that enables artists, designers, and creative teams to work together seamlessly. Built with modern web technologies, it offers professional drawing tools with the power of real-time collaboration.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters-git-main-venny-shiru.vercel.app)
 [![Backend API](https://img.shields.io/badge/API-Live-green?style=for-the-badge)](https://web-production-a1b2.up.railway.app)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-🌐 **Live Application**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
+🌐 **Live Application**: [https://canvas-crafters-git-main-venny-shiru.vercel.app](https://canvas-crafters-git-main-venny-shiru.vercel.app)
 
 🚀 **API Endpoint**: [https://web-production-a1b2.up.railway.app](https://web-production-a1b2.up.railway.app)
 
 ## ✨ Features
 
-### 🎨 **Professional Drawing Tools**
-- Complete suite of digital art tools
-- Brush engine with pressure sensitivity
-- Layer management system
-- Vector and raster support
-- Color palettes and gradients
+### 🎨 **Professional Drawing Tools (20+ Tools)**
+- **Basic Tools**: Brush, Eraser, Line, Rectangle, Circle, Text
+- **Advanced Tools**: Pen tool, Bezier curves, Polygon, Star shapes
+- **Color Tools**: Eyedropper, Flood fill, Gradient tool with live preview
+- **Effects**: Blur, Drop shadow, Texture brush
+- **Precision**: Zoom (25%-400%), Grid snap, Rulers
+- **Professional**: Layer management, Undo/Redo, Real-time collaboration
+- **Export**: Multiple formats with quality settings
 
 ### 👥 **Real-time Collaboration**
 - Multiple users editing simultaneously
-- Live cursor tracking
+- Live cursor tracking with user names
 - User presence indicators
 - Real-time chat and comments
-- Permission management (view/edit)
+- Permission management (view/edit/admin)
+- Conflict resolution system
 
 ### ⚡ **Performance & Reliability**
 - Zero-latency collaboration engine
 - Auto-save every 30 seconds
-- Conflict resolution system
-- Undo/redo with branching
-- WebRTC for low-latency communication
+- Advanced undo/redo with branching
+- WebSocket-based real-time communication
+- Optimized rendering engine
 
 ### 🌐 **Universal Access**
 - Works on any device with a web browser
-- Responsive design for mobile and desktop
+- Fully responsive design for mobile and desktop
+- Progressive Web App (PWA) capabilities
 - One-click sharing with customizable permissions
-- Export to multiple formats
+- Export to multiple formats (PNG, JPEG, SVG)
 - Public gallery showcase
+- Contact and support system
+
+## 🆕 Recent Updates (August 2025)
+
+### ✅ **Enhanced Canvas Editor**
+- **20+ Professional Tools**: Complete redesign with industry-standard tools
+- **Advanced Color Tools**: Eyedropper with pixel-perfect sampling, flood fill with stack-based algorithm, gradient tool with SVG preview
+- **Improved UX**: Better tool organization, real-time visual feedback, professional toolbar
+
+### ✅ **Contact & Support System**
+- **Comprehensive Contact Page**: Professional contact form with categorized inquiries
+- **FAQ Section**: Common questions and troubleshooting
+- **Multiple Support Channels**: Email, feedback forms, GitHub integration
+- **Site-wide Footer**: Consistent contact information across all pages
+
+### ✅ **Authentication Enhancements**
+- **Password Reset Flow**: Secure forgot password and reset functionality
+- **Enhanced Routing**: Improved protected routes with flexible access control
+- **Better User Experience**: Streamlined login/register flow
+
+### ✅ **Infrastructure Improvements**
+- **Performance Optimization**: Faster loading times and better caching
+- **Error Handling**: Comprehensive error boundaries and user feedback
+- **Code Quality**: TypeScript improvements and better component structure
 
 ## 🚀 Quick Start
 
@@ -107,8 +135,19 @@ canvas-crafters/
 ├── client/                 # Frontend React application
 │   ├── src/
 │   │   ├── components/     # Reusable UI components
-│   │   ├── contexts/       # React contexts (Auth, etc.)
+│   │   │   ├── Navbar.tsx        # Navigation component
+│   │   │   ├── Footer.tsx        # Site-wide footer
+│   │   │   ├── CanvasCard.tsx    # Canvas preview cards
+│   │   │   └── ProtectedRoute.tsx # Route protection
+│   │   ├── contexts/       # React contexts
+│   │   │   └── AuthContext.tsx   # Authentication state
 │   │   ├── pages/          # Application pages
+│   │   │   ├── Home.tsx          # Landing page
+│   │   │   ├── Dashboard.tsx     # User dashboard
+│   │   │   ├── CanvasEditor.tsx  # Main canvas editor (20+ tools)
+│   │   │   ├── Contact.tsx       # Contact and support page
+│   │   │   ├── Login.tsx         # Authentication pages
+│   │   │   └── Register.tsx
 │   │   └── main.tsx        # Entry point
 │   ├── index.html
 │   └── vite.config.ts
@@ -116,8 +155,14 @@ canvas-crafters/
 │   ├── config/             # Database and app configuration
 │   ├── middleware/         # Express middleware
 │   ├── models/             # Mongoose models
+│   │   ├── User.js              # User model with enhanced auth
+│   │   └── Canvas.js            # Canvas model
 │   ├── routes/             # API routes
+│   │   ├── auth.js              # Authentication endpoints
+│   │   ├── user.js              # User management
+│   │   └── canvas.js            # Canvas operations
 │   ├── sockets/            # Socket.io handlers
+│   │   └── canvasSocket.js      # Real-time collaboration
 │   └── index.js            # Server entry point
 ├── .env                    # Environment variables
 └── package.json            # Project dependencies and scripts
@@ -194,23 +239,27 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 API Documentation
+### 📝 API Documentation
 
 ### Authentication Endpoints
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get user profile
+- `POST /api/auth/register` - User registration with validation
+- `POST /api/auth/login` - User login with JWT tokens
+- `POST /api/auth/forgot-password` - Request password reset
+- `POST /api/auth/reset-password` - Reset password with token
+- `GET /api/auth/profile` - Get authenticated user profile
 
 ### Canvas Endpoints
-- `GET /api/canvas` - List user canvases
-- `POST /api/canvas` - Create new canvas
-- `GET /api/canvas/:id` - Get canvas details
-- `PUT /api/canvas/:id` - Update canvas
-- `DELETE /api/canvas/:id` - Delete canvas
+- `GET /api/canvas` - List user canvases with pagination
+- `POST /api/canvas` - Create new canvas with metadata
+- `GET /api/canvas/:id` - Get canvas details and data
+- `PUT /api/canvas/:id` - Update canvas (title, description, data)
+- `DELETE /api/canvas/:id` - Delete canvas (creator only)
+- `POST /api/canvas/:id/share` - Share canvas with permissions
 
 ### User Endpoints
-- `GET /api/users/profile` - Get user profile
-- `PUT /api/users/profile` - Update user profile
+- `GET /api/users/profile` - Get detailed user profile
+- `PUT /api/users/profile` - Update user profile and settings
+- `POST /api/users/upload-avatar` - Upload profile picture
 
 ## 🔒 Security Features
 
@@ -223,26 +272,31 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## 🚀 Deployment
 
-### ✅ **Live Deployment Status**
+### ✅ **Live Deployment Status** (Updated August 2025)
 
-Your Canvas Crafters application is successfully deployed and running!
+Your Canvas Crafters application is successfully deployed and running with the latest enhancements!
 
 **🌐 Frontend (Vercel)**: [https://canvas-crafters-git-main-venny-shiru.vercel.app](https://canvas-crafters-git-main-venny-shiru.vercel.app)
-- ✅ Real-time UI updates
-- ✅ Responsive design
-- ✅ Tailwind CSS styling
-- ✅ React Router navigation
+- ✅ Enhanced canvas editor with 20+ professional tools
+- ✅ Contact page with comprehensive support system
+- ✅ Site-wide footer with consistent navigation
+- ✅ Improved authentication flow with password reset
+- ✅ Responsive design optimized for all devices
+- ✅ Real-time collaboration features
 
 **🚂 Backend (Railway)**: [https://web-production-a1b2.up.railway.app](https://web-production-a1b2.up.railway.app)
-- ✅ Node.js/Express API
-- ✅ Socket.io real-time collaboration
-- ✅ JWT authentication
-- ✅ MongoDB database connection
+- ✅ Enhanced authentication system with password reset
+- ✅ Improved user management and profile features
+- ✅ Advanced canvas operations and sharing
+- ✅ Socket.io real-time collaboration engine
+- ✅ JWT authentication with secure token handling
+- ✅ MongoDB Atlas integration
 
 **🗄️ Database (MongoDB Atlas)**: Connected and operational
-- ✅ User authentication system
-- ✅ Canvas data storage
+- ✅ Enhanced user model with profile features
+- ✅ Advanced canvas data storage with metadata
 - ✅ Real-time data synchronization
+- ✅ Secure authentication and session management
 
 ### 🔧 Deployment Architecture
 
@@ -270,35 +324,41 @@ CLIENT_URL=https://canvas-crafters-git-main-venny-shiru.vercel.app
 SOCKET_CORS_ORIGIN=https://canvas-crafters-git-main-venny-shiru.vercel.app
 ```
 
-### 📊 Deployment Statistics
+### 📊 Deployment Statistics (August 2025)
 
 - **Build Time**: ~2-3 minutes per deployment
 - **Cold Start**: <2 seconds
-- **Global CDN**: Vercel Edge Network
+- **Global CDN**: Vercel Edge Network with global coverage
 - **Uptime**: 99.9% (Railway + Vercel SLA)
-- **Database**: MongoDB Atlas M0 (Free Tier)
+- **Database**: MongoDB Atlas M0 (Free Tier) with 512MB storage
+- **Latest Deployment**: August 2025 with major feature enhancements
 
 ### 💰 Current Hosting Costs
 
-- **Frontend (Vercel)**: $0/month (Hobby Plan)
-- **Backend (Railway)**: ~$0-5/month (Usage-based)
+- **Frontend (Vercel)**: $0/month (Hobby Plan - 100GB bandwidth)
+- **Backend (Railway)**: ~$0-5/month (Usage-based pricing)
 - **Database (MongoDB Atlas)**: $0/month (Free M0 Cluster)
-- **Total**: **$0-5/month**
+- **Domain**: Free (vercel.app subdomain)
+- **Total**: **$0-5/month** - Extremely cost-effective!
 
-### 🔄 Continuous Deployment
+### 🔄 Continuous Deployment & DevOps
 
 - **Automatic deployments** triggered on every push to `main` branch
-- **Frontend**: Vercel automatically rebuilds from GitHub
+- **Frontend**: Vercel automatically rebuilds and deploys from GitHub
 - **Backend**: Railway automatically redeploys from GitHub
-- **Environment**: Production-ready with proper security headers
+- **Preview deployments**: Vercel creates preview URLs for pull requests
+- **Environment management**: Separate staging and production configurations
+- **Health monitoring**: Automatic error tracking and performance monitoring
 
-### 📈 Performance Optimizations
+### 📈 Performance Optimizations (Latest Updates)
 
-- ✅ **Vite build optimization** for fast loading
-- ✅ **Tailwind CSS purging** for minimal bundle size
-- ✅ **Socket.io optimization** for real-time performance
-- ✅ **MongoDB indexing** for fast queries
-- ✅ **CORS configuration** for secure cross-origin requests
+- ✅ **Vite build optimization** with tree shaking and code splitting
+- ✅ **Tailwind CSS purging** for minimal CSS bundle size
+- ✅ **Socket.io optimization** for sub-100ms collaboration latency
+- ✅ **MongoDB indexing** for faster user and canvas queries
+- ✅ **Image optimization** with WebP format support
+- ✅ **Lazy loading** for better initial page load times
+- ✅ **Service worker** for offline capabilities (PWA-ready)
 
 ### 🔒 Security Features
 

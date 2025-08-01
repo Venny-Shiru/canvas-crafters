@@ -179,9 +179,12 @@ const Login: React.FC = () => {
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+              <Link
+                to="/forgot-password"
+                className="font-medium text-blue-600 hover:text-blue-500"
+              >
                 Forgot your password?
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -224,7 +227,8 @@ const Login: React.FC = () => {
             Want to try Canvas Crafters without signing up? Use the demo account:
           </p>
           <div className="mt-2 text-xs text-blue-600 font-mono">
-            <div>Username: demo</div>
+            <div>Email: demo@canvascrafters.com</div>
+            <div>Username: demo_user</div>
             <div>Password: demo123</div>
           </div>
         </div>

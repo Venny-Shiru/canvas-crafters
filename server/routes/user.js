@@ -16,7 +16,14 @@ router.get('/profile/:username', optionalAuth, asyncHandler(async (req, res) => 
 
     // Find user by username
     const user = await User.findOne({ username, isActive: true })
-      .populate('canvases', 'title thumbnail createdAt settings.isPublic views likeCount')
+      .populate({
+        path: 'canvases',
+        select: 'title thumbnail createdAt settings.isPublic views likeCount owner',
+        populate: {
+          path: 'owner',
+          select: 'username avatar'
+        }
+      })
       .populate('collaborations', 'title thumbnail owner createdAt');
 
     if (!user) {
@@ -41,16 +48,7 @@ router.get('/profile/:username', optionalAuth, asyncHandler(async (req, res) => 
     };
 
     res.json({
-      user: {
-        _id: user._id,
-        username: user.username,
-        avatar: user.avatar,
-        bio: user.bio,
-        createdAt: user.createdAt,
-        lastLogin: req.user && req.user._id.toString() === user._id.toString() 
-          ? user.lastLogin 
-          : undefined
-      },
+      user: user.toSafeObject(),
       canvases: visibleCanvases,
       stats
     });
@@ -303,6 +301,149 @@ router.get('/stats', auth, asyncHandler(async (req, res) => {
   } catch (error) {
     console.error('Get user stats error:', error);
     res.status(500).json({ message: 'Server error getting user statistics' });
+  }
+}));
+
+// @route   GET /api/users/settings
+// @desc    Get user settings
+// @access  Private
+router.get('/settings', auth, asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return user data that's needed for settings
+    const userSafe = user.toSafeObject();
+    res.json({
+      username: userSafe.username,
+      email: userSafe.email,
+      bio: userSafe.bio || '',
+      avatar: userSafe.avatar || '',
+      notifications: {
+        emailNotifications: true, // Default values
+        canvasComments: true,
+        collaborationInvites: true,
+        weeklyDigest: false
+      },
+      privacy: {
+        profileVisibility: 'public',
+        showCanvasCount: true,
+        showCollaborations: true
+      },
+      preferences: {
+        defaultCanvasSize: '800x600',
+        autoSaveInterval: 30,
+        theme: 'light'
+      }
+    });
+
+  } catch (error) {
+    console.error('Get user settings error:', error);
+    res.status(500).json({ message: 'Server error getting user settings' });
+  }
+}));
+
+// @route   PUT /api/users/settings
+// @desc    Update user settings
+// @access  Private
+router.put('/settings', auth, asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update basic user info if provided
+    const { username, bio } = req.body;
+    
+    if (username && username !== user.username) {
+      // Check if username is already taken
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Username is already taken' });
+      }
+      user.username = username;
+    }
+
+    if (bio !== undefined) {
+      user.bio = bio;
+    }
+
+    await user.save();
+
+    res.json({
+      message: 'Settings updated successfully',
+      user: user.toSafeObject()
+    });
+
+  } catch (error) {
+    console.error('Update user settings error:', error);
+    res.status(500).json({ message: 'Server error updating user settings' });
+  }
+}));
+
+// @route   DELETE /api/users/delete-account
+// @desc    Delete user account
+// @access  Private
+router.delete('/delete-account', auth, asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Soft delete - just deactivate the account
+    user.isActive = false;
+    await user.save();
+
+    res.json({ message: 'Account deleted successfully' });
+
+  } catch (error) {
+    console.error('Delete account error:', error);
+    res.status(500).json({ message: 'Server error deleting account' });
+  }
+}));
+
+// @route   GET /api/user/stats
+// @desc    Get platform statistics
+// @access  Public
+router.get('/stats', asyncHandler(async (req, res) => {
+  try {
+    // Get total statistics
+    const totalUsers = await User.countDocuments({ isActive: true });
+    const totalCanvases = await Canvas.countDocuments({ 'settings.isPublic': true });
+    
+    // Get total views from all public canvases
+    const viewsResult = await Canvas.aggregate([
+      { $match: { 'settings.isPublic': true } },
+      { $group: { _id: null, totalViews: { $sum: '$views' } } }
+    ]);
+    
+    const totalViews = viewsResult.length > 0 ? viewsResult[0].totalViews : 0;
+    
+    // Get total likes from all public canvases
+    const likesResult = await Canvas.aggregate([
+      { $match: { 'settings.isPublic': true } },
+      { $group: { _id: null, totalLikes: { $sum: { $size: '$likes' } } } }
+    ]);
+    
+    const totalLikes = likesResult.length > 0 ? likesResult[0].totalLikes : 0;
+
+    res.json({
+      totalUsers,
+      totalCanvases,
+      totalViews,
+      totalLikes
+    });
+
+  } catch (error) {
+    console.error('Get stats error:', error);
+    res.status(500).json({ message: 'Server error getting statistics' });
   }
 }));
 

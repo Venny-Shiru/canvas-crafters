@@ -84,6 +84,9 @@ const Navbar: React.FC = () => {
 
           {/* User Menu / Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            <NavLink to="/contact">
+              Contact
+            </NavLink>
             {state.isAuthenticated ? (
               <div className="relative group">
                 <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200">
@@ -163,6 +166,14 @@ const Navbar: React.FC = () => {
             >
               <Home className="w-4 h-4 inline mr-2" />
               Home
+            </Link>
+            
+            <Link
+              to="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+            >
+              Contact
             </Link>
             
             {state.isAuthenticated ? (

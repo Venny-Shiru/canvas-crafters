@@ -38,7 +38,7 @@ interface UserSettings {
 }
 
 const Settings: React.FC = () => {
-  const { state, logout } = useAuth();
+  const { state, logout, refreshUser } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -74,14 +74,33 @@ const Settings: React.FC = () => {
     showPasswords: false
   });
 
+  const [avatarUpload, setAvatarUpload] = useState({
+    uploading: false,
+    selectedFile: null as File | null
+  });
+
   useEffect(() => {
     fetchUserSettings();
   }, []);
 
+  // Update settings when user data changes in AuthContext
+  useEffect(() => {
+    if (state.user) {
+      setSettings(prevSettings => ({
+        ...prevSettings,
+        username: state.user?.username || '',
+        email: state.user?.email || '',
+        bio: state.user?.bio || '',
+        avatar: state.user?.avatar || ''
+      }));
+    }
+  }, [state.user]);
+
   const fetchUserSettings = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/users/settings', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/users/settings`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -101,7 +120,8 @@ const Settings: React.FC = () => {
   const handleSaveSettings = async () => {
     try {
       setSaving(true);
-      const response = await fetch('/api/users/settings', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/users/settings`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +156,8 @@ const Settings: React.FC = () => {
 
     try {
       setSaving(true);
-      const response = await fetch('/api/auth/change-password', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/auth/change-password`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -180,7 +201,8 @@ const Settings: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/users/delete-account', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/users/delete-account`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -196,6 +218,71 @@ const Settings: React.FC = () => {
     } catch (error) {
       console.error('Error deleting account:', error);
       alert('Failed to delete account');
+    }
+  };
+
+  const handleAvatarUpload = async (file: File) => {
+    try {
+      setAvatarUpload({ uploading: true, selectedFile: file });
+      
+      const formData = new FormData();
+      formData.append('avatar', file);
+      
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/auth/upload-avatar`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: formData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Avatar upload response:', data);
+        
+        // Use the avatar URL from the user object (now absolute)
+        const avatarUrl = data.user.avatar;
+        console.log('Avatar URL from response:', avatarUrl);
+        
+        // Update local settings state with cache busting
+        setSettings(prevSettings => ({ 
+          ...prevSettings, 
+          avatar: avatarUrl + '?t=' + Date.now() // Add timestamp to force refresh
+        }));
+        
+        // Refresh user data in AuthContext to update everywhere
+        await refreshUser();
+        
+        alert('Avatar uploaded successfully!');
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Failed to upload avatar');
+      }
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      alert('Failed to upload avatar');
+    } finally {
+      setAvatarUpload({ uploading: false, selectedFile: null });
+    }
+  };
+
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+      
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        return;
+      }
+      
+      handleAvatarUpload(file);
     }
   };
 
@@ -272,27 +359,53 @@ const Settings: React.FC = () => {
                       <div className="relative">
                         {settings.avatar ? (
                           <img
+                            key={settings.avatar} // Force re-render when avatar changes
                             src={settings.avatar}
                             alt="Profile"
                             className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
+                            onLoad={() => console.log('Avatar image loaded:', settings.avatar)}
+                            onError={(e) => {
+                              console.log('Avatar image failed to load:', settings.avatar);
+                              console.log('Error event:', e);
+                            }}
                           />
                         ) : (
                           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center border-4 border-gray-200">
                             <User className="w-12 h-12 text-gray-400" />
                           </div>
                         )}
-                        <button className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors">
+                        <label 
+                          htmlFor="avatar-upload"
+                          className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors cursor-pointer"
+                        >
                           <Camera className="w-4 h-4" />
-                        </button>
+                        </label>
+                        <input
+                          id="avatar-upload"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleAvatarChange}
+                          className="hidden"
+                        />
                       </div>
                       <div>
                         <h3 className="font-medium text-gray-900">Profile Photo</h3>
                         <p className="text-sm text-gray-500 mb-2">
                           Upload a photo to personalize your profile
                         </p>
-                        <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                          Change Photo
-                        </button>
+                        <label 
+                          htmlFor="avatar-upload" 
+                          className="text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer"
+                        >
+                          {avatarUpload.uploading ? 'Uploading...' : 'Change Photo'}
+                        </label>
+                        {/* Debug info */}
+                        <p className="text-xs text-gray-400 mt-1">
+                          Current avatar: {settings.avatar || 'none'}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Auth context avatar: {state.user?.avatar || 'none'}
+                        </p>
                       </div>
                     </div>
 

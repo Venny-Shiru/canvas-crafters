@@ -82,11 +82,17 @@ const Explore: React.FC = () => {
     fetchFeaturedCanvases();
     fetchPopularTags();
     fetchStats();
-  }, [searchTerm, selectedTags, sortBy, pagination.currentPage]);
+  }, [searchTerm, selectedTags, sortBy]);
+
+  const handlePageChange = (page: number) => {
+    setPagination(prev => ({ ...prev, currentPage: page }));
+    fetchCanvases(page);
+  };
 
   const fetchCanvases = async (page = 1) => {
     try {
       setLoading(true);
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       
       const params = new URLSearchParams({
         page: page.toString(),
@@ -96,7 +102,7 @@ const Explore: React.FC = () => {
         ...(selectedTags.length > 0 && { tags: selectedTags.join(',') })
       });
 
-      const response = await fetch(`/api/canvas?${params}`, {
+      const response = await fetch(`${API_BASE_URL}/canvas?${params}`, {
         headers: state.isAuthenticated ? {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         } : {}
@@ -116,7 +122,8 @@ const Explore: React.FC = () => {
 
   const fetchFeaturedCanvases = async () => {
     try {
-      const response = await fetch('/api/canvas?limit=6&sortBy=views', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/canvas?limit=6&sortBy=views`, {
         headers: state.isAuthenticated ? {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         } : {}
@@ -138,20 +145,46 @@ const Explore: React.FC = () => {
   };
 
   const fetchStats = async () => {
-    // This would typically come from a stats endpoint
-    // For now, we'll simulate it
-    setStats({
-      totalCanvases: 1247,
-      totalArtists: 324,
-      totalViews: 15642
-    });
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/stats`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setStats({
+          totalCanvases: data.totalCanvases || 0,
+          totalArtists: data.totalUsers || 0,
+          totalViews: data.totalViews || 0
+        });
+      } else {
+        // Fallback to demo data if API fails
+        setStats({
+          totalCanvases: 30,
+          totalArtists: 12,
+          totalViews: 850
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+      // Fallback to demo data
+      setStats({
+        totalCanvases: 30,
+        totalArtists: 12,
+        totalViews: 850
+      });
+    }
   };
 
   const handleLikeCanvas = async (canvasId: string) => {
     if (!state.isAuthenticated) return;
 
     try {
-      const response = await fetch(`/api/canvas/${canvasId}/like`, {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/canvas/${canvasId}/like`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -395,7 +428,7 @@ const Explore: React.FC = () => {
               {pagination.totalPages > 1 && (
                 <div className="flex items-center justify-center space-x-2 mt-8">
                   <button
-                    onClick={() => fetchCanvases(pagination.currentPage - 1)}
+                    onClick={() => handlePageChange(pagination.currentPage - 1)}
                     disabled={!pagination.hasPrev}
                     className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -408,7 +441,7 @@ const Explore: React.FC = () => {
                       return (
                         <button
                           key={page}
-                          onClick={() => fetchCanvases(page)}
+                          onClick={() => handlePageChange(page)}
                           className={`px-3 py-2 rounded-lg ${
                             page === pagination.currentPage
                               ? 'bg-blue-600 text-white'
@@ -422,7 +455,7 @@ const Explore: React.FC = () => {
                   </div>
                   
                   <button
-                    onClick={() => fetchCanvases(pagination.currentPage + 1)}
+                    onClick={() => handlePageChange(pagination.currentPage + 1)}
                     disabled={!pagination.hasNext}
                     className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >

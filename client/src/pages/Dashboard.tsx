@@ -114,7 +114,16 @@ const Dashboard: React.FC = () => {
       if (statsResponse.ok) {
         const statsData = await statsResponse.json();
         console.log('Stats data:', statsData);
-        setStats(statsData.stats || stats);
+        
+        // Ensure we have valid stats with default values
+        const validStats = {
+          canvasCount: statsData.stats?.canvasCount || 0,
+          totalViews: statsData.stats?.totalViews || 0,
+          totalLikes: statsData.stats?.totalLikes || 0,
+          collaborationCount: statsData.stats?.collaborationCount || 0
+        };
+        
+        setStats(validStats);
       }
 
     } catch (error) {
@@ -190,28 +199,28 @@ const Dashboard: React.FC = () => {
   const statCards = [
     {
       title: 'Total Canvases',
-      value: stats.canvasCount,
+      value: stats.canvasCount || 0,
       icon: <Palette className="w-6 h-6" />,
       color: 'bg-blue-500',
       textColor: 'text-blue-600'
     },
     {
       title: 'Total Views',
-      value: stats.totalViews,
+      value: stats.totalViews || 0,
       icon: <Eye className="w-6 h-6" />,
       color: 'bg-green-500',
       textColor: 'text-green-600'
     },
     {
       title: 'Total Likes',
-      value: stats.totalLikes,
+      value: stats.totalLikes || 0,
       icon: <Heart className="w-6 h-6" />,
       color: 'bg-red-500',
       textColor: 'text-red-600'
     },
     {
       title: 'Collaborations',
-      value: stats.collaborationCount,
+      value: stats.collaborationCount || 0,
       icon: <Users className="w-6 h-6" />,
       color: 'bg-purple-500',
       textColor: 'text-purple-600'

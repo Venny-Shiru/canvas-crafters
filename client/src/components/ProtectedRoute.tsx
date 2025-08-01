@@ -6,12 +6,14 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAuth?: boolean;
   redirectTo?: string;
+  allowAuthenticatedAccess?: boolean; // New prop to allow authenticated users on public pages
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
   requireAuth = true,
-  redirectTo 
+  redirectTo,
+  allowAuthenticatedAccess = false
 }) => {
   const { state } = useAuth();
   const location = useLocation();
@@ -37,7 +39,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // If user is authenticated but trying to access auth pages (login/register)
-  if (!requireAuth && state.isAuthenticated) {
+  // Only redirect if this is an auth page (not public pages like contact)
+  if (!requireAuth && state.isAuthenticated && !allowAuthenticatedAccess) {
     // Get the intended destination from state, or default to dashboard
     const from = (location.state as any)?.from?.pathname || '/dashboard';
     return <Navigate to={from} replace />;

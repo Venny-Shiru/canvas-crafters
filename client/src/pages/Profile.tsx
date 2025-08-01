@@ -35,7 +35,7 @@ interface Canvas {
   title: string;
   description?: string;
   thumbnail?: string;
-  owner: {
+  owner?: {
     _id: string;
     username: string;
     avatar?: string;
@@ -85,8 +85,9 @@ const Profile: React.FC = () => {
   const fetchUserProfile = async () => {
     try {
       setLoading(true);
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       
-      const response = await fetch(`/api/users/profile/${username}`, {
+      const response = await fetch(`${API_BASE_URL}/user/profile/${username}`, {
         headers: state.isAuthenticated ? {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         } : {}
@@ -111,7 +112,8 @@ const Profile: React.FC = () => {
     if (!state.isAuthenticated) return;
 
     try {
-      const response = await fetch(`/api/canvas/${canvasId}/like`, {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE_URL}/canvas/${canvasId}/like`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -148,6 +150,17 @@ const Profile: React.FC = () => {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading profile...</p>
         </div>
       </div>
     );

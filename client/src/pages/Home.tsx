@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -9,7 +9,9 @@ import {
   ArrowRight,
   CheckCircle,
   Star,
-  Play
+  Play,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -58,6 +60,66 @@ const Home: React.FC = () => {
       avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop'
     }
   ];
+
+  // Slideshow data for Interactive Canvas Preview
+  const slideshowSlides = [
+    {
+      id: 1,
+      title: 'Digital Art Masterpiece',
+      description: 'Collaborative artwork created by 5 artists',
+      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
+      users: ['Alice', 'Bob', 'Carol'],
+      category: 'Abstract Art'
+    },
+    {
+      id: 2,
+      title: 'Creative Workspace Design',
+      description: 'Real-time design collaboration in progress',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+      users: ['David', 'Eve'],
+      category: 'UI/UX Design'
+    },
+    {
+      id: 3,
+      title: 'Vibrant Paint Palette',
+      description: 'Color exploration and artistic experimentation',
+      image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop',
+      users: ['Frank', 'Grace', 'Henry'],
+      category: 'Color Study'
+    },
+    {
+      id: 4,
+      title: 'Geometric Patterns',
+      description: 'Mathematical art meets creative expression',
+      image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop',
+      users: ['Iris', 'Jack'],
+      category: 'Geometric Art'
+    }
+  ];
+
+  // Slideshow state
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-advance slideshow
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slideshowSlides.length);
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [slideshowSlides.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slideshowSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slideshowSlides.length) % slideshowSlides.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
 
   return (
     <div className="min-h-screen">
@@ -110,14 +172,75 @@ const Home: React.FC = () => {
               )}
             </div>
 
-            {/* Hero Image Placeholder */}
+            {/* Interactive Canvas Preview Slideshow */}
             <div className="mt-16 relative">
               <div className="bg-white rounded-2xl shadow-2xl p-4 mx-auto max-w-4xl">
-                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <Palette className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                    <p className="text-gray-600 text-lg">Interactive Canvas Preview</p>
-                    <p className="text-gray-500 text-sm mt-2">Real-time collaboration in action</p>
+                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg relative overflow-hidden">
+                  {/* Slideshow Images */}
+                  <div className="absolute inset-0">
+                    {slideshowSlides.map((slide, index) => (
+                      <div
+                        key={slide.id}
+                        className={`absolute inset-0 transition-opacity duration-1000 ${
+                          index === currentSlide ? 'opacity-100' : 'opacity-0'
+                        }`}
+                      >
+                        <img
+                          src={slide.image}
+                          alt={slide.title}
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg"></div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Slide Content Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white z-10">
+                      <Palette className="w-16 h-16 text-white mx-auto mb-4 drop-shadow-lg" />
+                      <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">
+                        {slideshowSlides[currentSlide].title}
+                      </h3>
+                      <p className="text-lg mb-2 drop-shadow-lg">
+                        {slideshowSlides[currentSlide].description}
+                      </p>
+                      <div className="flex items-center justify-center space-x-2 text-sm">
+                        <Users className="w-4 h-4" />
+                        <span>{slideshowSlides[currentSlide].users.length} collaborators</span>
+                        <span className="mx-2">•</span>
+                        <span>{slideshowSlides[currentSlide].category}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Navigation Arrows */}
+                  <button
+                    onClick={prevSlide}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 transition-all duration-200 shadow-lg"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-gray-700" />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 transition-all duration-200 shadow-lg"
+                  >
+                    <ChevronRight className="w-6 h-6 text-gray-700" />
+                  </button>
+
+                  {/* Slide Indicators */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    {slideshowSlides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                          index === currentSlide
+                            ? 'bg-white scale-110'
+                            : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                        }`}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -126,7 +249,9 @@ const Home: React.FC = () => {
               <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3 hidden lg:block">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm text-gray-600">3 users online</span>
+                  <span className="text-sm text-gray-600">
+                    {slideshowSlides[currentSlide].users.length} users online
+                  </span>
                 </div>
               </div>
               

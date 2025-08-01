@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Thumbnails Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .thumbnail { width: 200px; height: 150px; object-fit: cover; margin: 10px; border: 1px solid #ddd; }
+        .error { background: #f0f0f0; padding: 10px; color: red; }
+    </style>
+</head>
+<body>
+    <h1>Canvas Thumbnails Test</h1>
+    <div id="thumbnails"></div>
+
+    <script>
+        async function testThumbnails() {
+            try {
+                const response = await fetch('http://localhost:5000/api/canvas?page=1&limit=12&sortBy=createdAt');
+                const data = await response.json();
+                
+                const container = document.getElementById('thumbnails');
+                
+                data.canvases.forEach((canvas, index) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <h3>${canvas.title}</h3>
+                        <p>URL: ${canvas.thumbnail}</p>
+                        <img src="${canvas.thumbnail}" class="thumbnail" 
+                             onload="console.log('Loaded:', '${canvas.title}')"
+                             onerror="console.log('Failed:', '${canvas.title}', '${canvas.thumbnail}'); this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIFByZXZpZXc8L3RleHQ+PC9zdmc+'" />
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                document.getElementById('thumbnails').innerHTML = '<div class="error">Error: ' + error.message + '</div>';
+            }
+        }
+        
+        testThumbnails();
+    </script>
+</body>
+</html>

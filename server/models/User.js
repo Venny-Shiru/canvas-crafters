@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -49,6 +50,14 @@ const userSchema = new mongoose.Schema({
   lastLogin: {
     type: Date,
     default: Date.now
+  },
+  resetPasswordToken: {
+    type: String,
+    select: false
+  },
+  resetPasswordExpire: {
+    type: Date,
+    select: false
   }
 }, {
   timestamps: true,
@@ -88,7 +97,44 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 userSchema.methods.toSafeObject = function() {
   const userObject = this.toObject();
   delete userObject.password;
+  
+  // Convert relative avatar URLs to absolute URLs
+  if (userObject.avatar && userObject.avatar.startsWith('/uploads/')) {
+    const baseUrl = process.env.SERVER_URL || 'http://localhost:5000';
+    userObject.avatar = `${baseUrl}${userObject.avatar}`;
+  }
+  
   return userObject;
+};
+
+// Instance method to generate password reset token
+userSchema.methods.getResetPasswordToken = function() {
+  // Generate token
+  const resetToken = crypto.randomBytes(20).toString('hex');
+
+  // Hash token and set to resetPasswordToken field
+  this.resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  // Set expire
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+  return resetToken;
+};
+
+// Instance method to validate reset token
+userSchema.methods.validateResetToken = function(token) {
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+
+  return (
+    this.resetPasswordToken === hashedToken &&
+    this.resetPasswordExpire > Date.now()
+  );
 };
 
 // Static method to find user by email or username

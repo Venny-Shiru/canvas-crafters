@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 
 interface User {
   _id: string;
@@ -94,6 +94,7 @@ const AuthContext = createContext<{
   register: (username: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   updateProfile: (data: Partial<User>) => Promise<void>;
+  refreshUser: () => Promise<void>;
   clearError: () => void;
 } | null>(null);
 
@@ -104,7 +105,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   // Create API headers
-  const getHeaders = (includeAuth = false, token?: string) => {
+  const getHeaders = useCallback((includeAuth = false, token?: string) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -115,7 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     return headers;
-  };
+  }, [state.token]);
 
   // Check if user is authenticated on app load
   useEffect(() => {
@@ -150,34 +151,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const login = async (identifier: string, password: string) => {
+  const login = useCallback(async (identifier: string, password: string) => {
     dispatch({ type: 'AUTH_START' });
 
     try {
+      console.log('🔐 Frontend login attempt:', { identifier, API_BASE_URL });
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ identifier, password }),
       });
 
+      console.log('🌐 Login response status:', response.status);
       const data = await response.json();
+      console.log('📦 Login response data:', data);
 
       if (response.ok) {
+        console.log('✅ Login successful, storing token');
         dispatch({
           type: 'AUTH_SUCCESS',
           payload: { user: data.user, token: data.token },
         });
       } else {
+        console.log('❌ Login failed:', data.message);
         throw new Error(data.message || 'Login failed');
       }
     } catch (error) {
+      console.error('🚨 Login error:', error);
       const message = error instanceof Error ? error.message : 'Login failed';
       dispatch({ type: 'AUTH_FAILURE', payload: message });
       throw error;
     }
-  };
+  }, [API_BASE_URL, getHeaders]);
 
-  const register = async (username: string, email: string, password: string) => {
+  const register = useCallback(async (username: string, email: string, password: string) => {
     dispatch({ type: 'AUTH_START' });
 
     try {
@@ -202,13 +209,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       dispatch({ type: 'AUTH_FAILURE', payload: message });
       throw error;
     }
-  };
+  }, [API_BASE_URL, getHeaders]);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch({ type: 'LOGOUT' });
-  };
+  }, []);
 
-  const updateProfile = async (profileData: Partial<User>) => {
+  const updateProfile = useCallback(async (profileData: Partial<User>) => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/profile`, {
         method: 'PUT',
@@ -227,11 +234,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Profile update failed:', error);
       throw error;
     }
-  };
+  }, [API_BASE_URL, getHeaders]);
 
-  const clearError = () => {
+  const refreshUser = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const response = await fetch(`${API_BASE_URL}/auth/me`, {
+        headers: getHeaders(true, token),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({ type: 'UPDATE_USER', payload: data.user });
+      }
+    } catch (error) {
+      console.error('Failed to refresh user data:', error);
+    }
+  }, [API_BASE_URL, getHeaders]);
+
+  const clearError = useCallback(() => {
     dispatch({ type: 'CLEAR_ERROR' });
-  };
+  }, [dispatch]);
 
   return (
     <AuthContext.Provider
@@ -241,6 +266,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         register,
         logout,
         updateProfile,
+        refreshUser,
         clearError,
       }}
     >

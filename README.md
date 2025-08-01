@@ -5,15 +5,12 @@
 Canvas Crafters is a real-time collaborative digital canvas platform that enables artists, designers, and creative teams to work together seamlessly. Built with modern web technologies, it offers professional drawing tools with the power of real-time collaboration.
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters.vercel.app)
-[![Alternative Demo](https://img.shields.io/badge/Alt-Demo-blue?style=for-the-badge)](https://canvas-crafters-git-main-venny-shiru.vercel.app)
-[![Backend API](https://img.shields.io/badge/API-Live-green?style=for-the-badge)](https://web-production-a1b2.up.railway.app)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Venny-Shiru/canvas-crafters)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 🌐 **Live Application**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
 
-🌐 **Alternative URL**: [https://canvas-crafters-git-main-venny-shiru.vercel.app](https://canvas-crafters-git-main-venny-shiru.vercel.app)
-
-🚀 **API Endpoint**: [https://web-production-a1b2.up.railway.app](https://web-production-a1b2.up.railway.app)
+🚀 **API Status**: Backend integrated with frontend (full-stack deployment)
 
 ## ✨ Features
 
@@ -279,9 +276,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 Your Canvas Crafters application is successfully deployed and running with the latest enhancements!
 
-**🌐 Frontend (Vercel)**: 
-- Primary: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
-- Alternative: [https://canvas-crafters-git-main-venny-shiru.vercel.app](https://canvas-crafters-git-main-venny-shiru.vercel.app)
+**🌐 Frontend (Vercel)**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
 - ✅ Enhanced canvas editor with 20+ professional tools
 - ✅ Contact page with comprehensive support system
 - ✅ Site-wide footer with consistent navigation
@@ -289,7 +284,7 @@ Your Canvas Crafters application is successfully deployed and running with the l
 - ✅ Responsive design optimized for all devices
 - ✅ Real-time collaboration features
 
-**🚂 Backend (Railway)**: [https://web-production-a1b2.up.railway.app](https://web-production-a1b2.up.railway.app)
+**🚂 Backend (Integrated)**: Full-stack deployment with Vercel
 - ✅ Enhanced authentication system with password reset
 - ✅ Improved user management and profile features
 - ✅ Advanced canvas operations and sharing
@@ -306,27 +301,20 @@ Your Canvas Crafters application is successfully deployed and running with the l
 ### 🔧 Deployment Architecture
 
 ```
-Users → Vercel (Frontend) → Railway (Backend) → MongoDB Atlas (Database)
+Users → Vercel (Full-Stack Application) → MongoDB Atlas (Database)
                 ↓
-        Socket.io Real-time Communication
+        Integrated Real-time Communication
 ```
 
 ### 🎯 Current Environment Variables
 
-**Production Frontend (Vercel):**
+**Production Environment (Vercel Full-Stack):**
 ```env
-VITE_API_URL=https://web-production-a1b2.up.railway.app/api
-VITE_SOCKET_URL=https://web-production-a1b2.up.railway.app
+VITE_API_URL=https://canvas-crafters.vercel.app/api
+VITE_SOCKET_URL=https://canvas-crafters.vercel.app
 VITE_APP_NAME=Canvas Crafters
-```
-
-**Production Backend (Railway):**
-```env
-NODE_ENV=production
 MONGODB_URI=mongodb+srv://[secured]
 JWT_SECRET=[secured]
-CLIENT_URL=https://canvas-crafters-git-main-venny-shiru.vercel.app
-SOCKET_CORS_ORIGIN=https://canvas-crafters-git-main-venny-shiru.vercel.app
 ```
 
 ### 📊 Deployment Statistics (August 2025)
@@ -340,19 +328,17 @@ SOCKET_CORS_ORIGIN=https://canvas-crafters-git-main-venny-shiru.vercel.app
 
 ### 💰 Current Hosting Costs
 
-- **Frontend (Vercel)**: $0/month (Hobby Plan - 100GB bandwidth)
-- **Backend (Railway)**: ~$0-5/month (Usage-based pricing)
+- **Full-Stack App (Vercel)**: $0/month (Hobby Plan - 100GB bandwidth)
 - **Database (MongoDB Atlas)**: $0/month (Free M0 Cluster)
 - **Domain**: Free (vercel.app subdomain)
-- **Total**: **$0-5/month** - Extremely cost-effective!
+- **Total**: **$0/month** - Completely free hosting! 🎉
 
 ### 🔄 Continuous Deployment & DevOps
 
 - **Automatic deployments** triggered on every push to `main` branch
-- **Frontend**: Vercel automatically rebuilds and deploys from GitHub
-- **Backend**: Railway automatically redeploys from GitHub
+- **Full-Stack**: Vercel automatically rebuilds and deploys both frontend and backend from GitHub
 - **Preview deployments**: Vercel creates preview URLs for pull requests
-- **Environment management**: Separate staging and production configurations
+- **Environment management**: Secure environment variable handling
 - **Health monitoring**: Automatic error tracking and performance monitoring
 
 ### 📈 Performance Optimizations (Latest Updates)
@@ -380,7 +366,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact & Support
 
 - **GitHub**: [@Venny-Shiru](https://github.com/Venny-Shiru)
-- **Email**: [vennywanjiru@gmail.com]
+- **Email**: [vennywanjiru@gmail.com](mailto:vennywanjiru@gmail.com)
 - **Project Link**: [https://github.com/Venny-Shiru/canvas-crafters](https://github.com/Venny-Shiru/canvas-crafters)
 
 ---

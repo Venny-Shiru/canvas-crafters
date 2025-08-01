@@ -368,21 +368,9 @@ SOCKET_CORS_ORIGIN=https://canvas-crafters-git-main-venny-shiru.vercel.app
 - ✅ **CORS protection** with specific origins
 - ✅ **Environment variable security** (no secrets in code)
 
-### Alternative Deployment Options
-- **Lovable**: Visit [Lovable Project](https://lovable.dev/projects/2a4c49c6-ff4d-4c9a-a7f1-7eb11580d449) → Share → Publish
-- **Netlify**: Alternative frontend hosting
-- **Render**: Alternative full-stack hosting
-- **Heroku**: Traditional PaaS option
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built with [Lovable](https://lovable.dev) - AI-powered web development
-- Icons by [Lucide React](https://lucide.dev)
-- UI components inspired by modern design systems
 
 ## 📞 Contact & Support
 

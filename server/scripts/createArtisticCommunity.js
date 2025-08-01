@@ -1,14 +1,8 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 import Canvas from '../models/Canvas.js';
 import crypto from 'crypto';
-import bcrypt from 'bcryptjs';
-
-// Connect to database
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
-import Canvas from '../models/Canvas.js';
 import dotenv from 'dotenv';
 
 // Load environment variables
@@ -327,3 +321,7 @@ console.log(`   • Views: ${viewsMatch ? '✅' : '❌'} ${viewsMatch ? 'Perfect
 await mongoose.disconnect();
 console.log('🔌 Database connection closed');
 console.log('\n🚀 Your Canvas Crafters community is ready to explore!');
+};
+
+// Run the function
+createArtisticCommunity().catch(console.error);

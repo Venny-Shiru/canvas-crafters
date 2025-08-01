@@ -3,18 +3,20 @@ import User from '../models/User.js';
 import Canvas from '../models/Canvas.js';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
-
-// Connect to database
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config({ path: '../../.env' });
 
+// Connect to database
 const connectDB = async () => {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/canvas-crafters');
+    console.log('🔌 Connected to MongoDB');
+};
 
-console.log('🎨 Starting Canvas Crafters sample data generation...');
+const seedData = async () => {
+    await connectDB();
+    console.log('🎨 Starting Canvas Crafters sample data generation...');
 
 // Sample users data - diverse artist profiles
 const sampleUsers = [
@@ -477,3 +479,7 @@ console.log(`   totalViews: ${totalViews[0]?.totalViews || 0}`);
 
 await mongoose.disconnect();
 console.log('🔌 Database connection closed');
+};
+
+// Run the seeding function
+seedData().catch(console.error);

@@ -1,16 +1,12 @@
 import mongoose from 'mongoose';
 import Canvas from '../models/Canvas.js';
-
-async function checkAllThumbnails() {
-  try {
-    import mongoose from 'mongoose';
-import Canvas from '../models/Canvas.js';
 import dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config({ path: '../../.env' });
 
 async function checkAllThumbnails() {
+  try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/canvas-crafters');
     
     const allCanvases = await Canvas.find({}).select('title thumbnail');

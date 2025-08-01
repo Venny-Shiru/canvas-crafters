@@ -284,7 +284,7 @@ Your Canvas Crafters application is successfully deployed and running with the l
 - ✅ Responsive design optimized for all devices
 - ✅ Real-time collaboration features
 
-**🚂 Backend (Integrated)**: Full-stack deployment with Vercel
+**🚂 Backend (Railway)**: [https://canvas-crafters-production.up.railway.app](https://canvas-crafters-production.up.railway.app)
 - ✅ Enhanced authentication system with password reset
 - ✅ Improved user management and profile features
 - ✅ Advanced canvas operations and sharing
@@ -301,17 +301,17 @@ Your Canvas Crafters application is successfully deployed and running with the l
 ### 🔧 Deployment Architecture
 
 ```
-Users → Vercel (Full-Stack Application) → MongoDB Atlas (Database)
-                ↓
-        Integrated Real-time Communication
+Users → Vercel (Frontend) → Railway (Backend API) → MongoDB Atlas (Database)
+                              ↓
+                    Real-time Socket.io Communication
 ```
 
 ### 🎯 Current Environment Variables
 
-**Production Environment (Vercel Full-Stack):**
+**Production Environment (Hybrid Deployment):**
 ```env
-VITE_API_URL=https://canvas-crafters.vercel.app/api
-VITE_SOCKET_URL=https://canvas-crafters.vercel.app
+VITE_API_URL=https://canvas-crafters-production.up.railway.app/api
+VITE_SOCKET_URL=https://canvas-crafters-production.up.railway.app
 VITE_APP_NAME=Canvas Crafters
 MONGODB_URI=mongodb+srv://[secured]
 JWT_SECRET=[secured]
@@ -328,7 +328,8 @@ JWT_SECRET=[secured]
 
 ### 💰 Current Hosting Costs
 
-- **Full-Stack App (Vercel)**: $0/month (Hobby Plan - 100GB bandwidth)
+- **Frontend (Vercel)**: $0/month (Hobby Plan - 100GB bandwidth)
+- **Backend (Railway)**: $0/month (Hobby Plan - 500 hours)
 - **Database (MongoDB Atlas)**: $0/month (Free M0 Cluster)
 - **Domain**: Free (vercel.app subdomain)
 - **Total**: **$0/month** - Completely free hosting! 🎉
@@ -336,7 +337,8 @@ JWT_SECRET=[secured]
 ### 🔄 Continuous Deployment & DevOps
 
 - **Automatic deployments** triggered on every push to `main` branch
-- **Full-Stack**: Vercel automatically rebuilds and deploys both frontend and backend from GitHub
+- **Frontend**: Vercel automatically rebuilds and deploys frontend from GitHub
+- **Backend**: Railway automatically rebuilds and deploys backend from GitHub  
 - **Preview deployments**: Vercel creates preview URLs for pull requests
 - **Environment management**: Secure environment variable handling
 - **Health monitoring**: Automatic error tracking and performance monitoring

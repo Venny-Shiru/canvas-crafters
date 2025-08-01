@@ -110,10 +110,14 @@ const Login: React.FC = () => {
                 name="identifier"
                 type="text"
                 autoComplete="username"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck="false"
+                inputMode="email"
                 required
                 value={formData.identifier}
                 onChange={handleChange}
-                className={`appearance-none relative block w-full px-3 py-2 border rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm ${
+                className={`appearance-none relative block w-full px-3 py-3 border rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-base ${
                   errors.identifier 
                     ? 'border-red-300 bg-red-50' 
                     : 'border-gray-300'
@@ -136,10 +140,13 @@ const Login: React.FC = () => {
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck="false"
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className={`appearance-none relative block w-full px-3 py-2 pr-10 border rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm ${
+                  className={`appearance-none relative block w-full px-3 py-3 pr-10 border rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-base ${
                     errors.password 
                       ? 'border-red-300 bg-red-50' 
                       : 'border-gray-300'

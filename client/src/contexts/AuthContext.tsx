@@ -155,7 +155,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     dispatch({ type: 'AUTH_START' });
 
     try {
-      console.log('🔐 Frontend login attempt:', { identifier, API_BASE_URL });
+      console.log('🔐 Frontend login attempt:', { 
+        identifier, 
+        API_BASE_URL, 
+        userAgent: navigator.userAgent,
+        isMobile: /Mobi|Android/i.test(navigator.userAgent)
+      });
+      
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: getHeaders(),
@@ -163,6 +169,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       console.log('🌐 Login response status:', response.status);
+      console.log('📱 Response headers:', Object.fromEntries(response.headers.entries()));
+      
       const data = await response.json();
       console.log('📦 Login response data:', data);
 
@@ -178,7 +186,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (error) {
       console.error('🚨 Login error:', error);
-      const message = error instanceof Error ? error.message : 'Login failed';
+      console.error('🔍 Error details:', {
+        name: error instanceof Error ? error.name : 'Unknown',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : 'No stack trace'
+      });
+      
+      let message = 'Login failed';
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        message = 'Network error - please check your internet connection';
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
+      
       dispatch({ type: 'AUTH_FAILURE', payload: message });
       throw error;
     }

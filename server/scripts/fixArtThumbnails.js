@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Canvas from '../models/Canvas.js';
 
 // Connect to database
-await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://vennywanjiru:sayjay77@mernstack.gb9x0em.mongodb.net/canvas-crafters?retryWrites=true&w=majority&appName=MERNSTACK');
+await mongoose.connect(process.env.MONGODB_URI || 'process.env.MONGODB_URI || \"mongodb://localhost:27017/canvas-crafters\"');
 
 console.log('🎨 Creating beautiful, art-focused thumbnails...');
 

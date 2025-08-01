@@ -5,7 +5,17 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
 // Connect to database
-await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://vennywanjiru:sayjay77@mernstack.gb9x0em.mongodb.net/canvas-crafters?retryWrites=true&w=majority&appName=MERNSTACK');
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+import Canvas from '../models/Canvas.js';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config({ path: '../../.env' });
+
+const createArtisticCommunity = async () => {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/canvas-crafters');
 
 console.log('🎨 Creating Canvas Crafters artistic community...');
 

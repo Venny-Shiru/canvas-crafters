@@ -3,7 +3,15 @@ import Canvas from '../models/Canvas.js';
 
 async function checkAllThumbnails() {
   try {
-    await mongoose.connect('mongodb+srv://vennywanjiru:sayjay77@mernstack.gb9x0em.mongodb.net/canvas-crafters?retryWrites=true&w=majority&appName=MERNSTACK');
+    import mongoose from 'mongoose';
+import Canvas from '../models/Canvas.js';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config({ path: '../../.env' });
+
+async function checkAllThumbnails() {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/canvas-crafters');
     
     const allCanvases = await Canvas.find({}).select('title thumbnail');
     console.log('Total canvases:', allCanvases.length);

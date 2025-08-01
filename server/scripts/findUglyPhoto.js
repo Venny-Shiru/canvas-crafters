@@ -4,7 +4,7 @@ import Canvas from '../models/Canvas.js';
 async function findAndReplaceAllVariations() {
   try {
     console.log('Connecting to MongoDB...');
-    await mongoose.connect('mongodb+srv://vennywanjiru:sayjay77@mernstack.gb9x0em.mongodb.net/canvas-crafters?retryWrites=true&w=majority&appName=MERNSTACK');
+    await mongoose.connect('process.env.MONGODB_URI || \"mongodb://localhost:27017/canvas-crafters\"');
     console.log('Connected successfully!');
     
     // The ugly photo ID you mentioned

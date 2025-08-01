@@ -17,19 +17,36 @@ import canvasSocket from './sockets/canvasSocket.js';
 // Load environment variables
 dotenv.config();
 
+// CORS configuration function to handle all Vercel deployments
+const corsOrigins = (origin, callback) => {
+  const allowedOrigins = [
+    process.env.CLIENT_URL || "http://localhost:5173",
+    "https://canvas-crafters.vercel.app",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176"
+  ];
+  
+  // Allow Vercel preview deployments
+  if (origin && origin.match(/^https:\/\/canvas-crafters-.*\.vercel\.app$/)) {
+    allowedOrigins.push(origin);
+  }
+  
+  // Allow all origins in allowedOrigins or no origin (for mobile apps)
+  if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    callback(null, true);
+  } else {
+    callback(new Error('Not allowed by CORS'));
+  }
+};
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [
-      process.env.CLIENT_URL || "http://localhost:5173",
-      "https://canvas-crafters-git-main-venny-shiru.vercel.app",
-      "https://canvas-crafters.vercel.app",
-      "http://localhost:5174",
-      "http://localhost:5175",
-      "http://localhost:5176"
-    ],
-    methods: ["GET", "POST"]
+    origin: corsOrigins,
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
@@ -41,14 +58,7 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL || "http://localhost:5173",
-    "https://canvas-crafters-git-main-venny-shiru.vercel.app",
-    "https://canvas-crafters.vercel.app",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:5176"
-  ],
+  origin: corsOrigins,
   credentials: true
 }));
 

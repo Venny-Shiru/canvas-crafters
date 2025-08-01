@@ -102,7 +102,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // API base URL
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  // Dynamic API URL - use relative URLs on same domain, environment variable otherwise
+  const API_BASE_URL = (() => {
+    // If running on the same domain as the API (Vercel full-stack)
+    if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+      return `${window.location.origin}/api`;
+    }
+    // Otherwise use environment variable or localhost fallback
+    return import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  })();
 
   // Create API headers
   const getHeaders = useCallback((includeAuth = false, token?: string) => {

@@ -2,6 +2,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": "client/dist",
   "installCommand": "npm install",
+  "env": {
+    "VITE_API_URL": "https://canvas-crafters-production.up.railway.app/api",
+    "VITE_SOCKET_URL": "https://canvas-crafters-production.up.railway.app",
+    "VITE_APP_NAME": "Canvas Crafters",
+    "VITE_APP_ENV": "production"
+  },
   "rewrites": [
     {
       "source": "/((?!api/.*).*)",

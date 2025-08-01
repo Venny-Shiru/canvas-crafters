@@ -5,22 +5,25 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 // Import routes
-import authRoutes from '../server/routes/auth.js';
-import canvasRoutes from '../server/routes/canvas.js';
-import userRoutes from '../server/routes/user.js';
+import authRoutes from './routes/auth.js';
+import canvasRoutes from './routes/canvas.js';
+import userRoutes from './routes/user.js';
 
 // Load environment variables
 dotenv.config();
 
 // MongoDB connection
+let isConnected = false;
+
 const connectDB = async () => {
+  if (isConnected) {
+    return;
+  }
+  
   try {
-    if (mongoose.connections[0].readyState) {
-      return;
-    }
-    
     const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/canvas-crafters';
     await mongoose.connect(mongoUri);
+    isConnected = true;
     console.log('MongoDB connected');
   } catch (error) {
     console.error('MongoDB connection error:', error);
@@ -52,9 +55,6 @@ const corsOrigins = (origin, callback) => {
 
 // Create Express app
 const app = express();
-
-// Connect to MongoDB
-connectDB();
 
 // Security middleware
 app.use(helmet({
@@ -93,5 +93,8 @@ app.get('/api', (req, res) => {
   });
 });
 
-// Export for Vercel
-export default app;
+// Vercel serverless function handler
+export default async (req, res) => {
+  await connectDB();
+  return app(req, res);
+};

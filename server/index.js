@@ -24,6 +24,7 @@ const io = new Server(server, {
     origin: [
       process.env.CLIENT_URL || "http://localhost:5173",
       "https://canvas-crafters-git-main-venny-shiru.vercel.app",
+      "https://canvas-crafters.vercel.app",
       "http://localhost:5174",
       "http://localhost:5175",
       "http://localhost:5176"
@@ -43,6 +44,7 @@ app.use(cors({
   origin: [
     process.env.CLIENT_URL || "http://localhost:5173",
     "https://canvas-crafters-git-main-venny-shiru.vercel.app",
+    "https://canvas-crafters.vercel.app",
     "http://localhost:5174",
     "http://localhost:5175",
     "http://localhost:5176"

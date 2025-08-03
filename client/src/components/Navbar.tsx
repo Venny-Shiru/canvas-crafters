@@ -94,10 +94,10 @@ const Navbar: React.FC = () => {
                     <img
                       src={state.user.avatar}
                       alt={state.user.username}
-                      className="w-8 h-8 rounded-full object-cover"
+                      className="w-9 h-9 rounded-full object-cover border-2 border-gray-200"
                     />
                   ) : (
-                    <User className="w-8 h-8 p-1 bg-gray-200 rounded-full" />
+                    <User className="w-9 h-9 p-1 bg-gray-200 rounded-full" />
                   )}
                   <span className="text-sm font-medium text-gray-700">
                     {state.user?.username}
@@ -205,9 +205,17 @@ const Navbar: React.FC = () => {
                 <Link
                   to={`/profile/${state.user?.username}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                  className="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md"
                 >
-                  <User className="w-4 h-4 inline mr-2" />
+                  {state.user?.avatar ? (
+                    <img
+                      src={state.user.avatar}
+                      alt={state.user.username}
+                      className="w-6 h-6 rounded-full object-cover mr-2"
+                    />
+                  ) : (
+                    <User className="w-4 h-4 inline mr-2" />
+                  )}
                   Profile
                 </Link>
                 <Link

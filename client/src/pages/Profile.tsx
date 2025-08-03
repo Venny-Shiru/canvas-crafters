@@ -197,35 +197,35 @@ const Profile: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             
             {/* Profile Info */}
-            <div className="flex items-center space-x-6 mb-6 md:mb-0">
+            <div className="flex items-center space-x-4 sm:space-x-6 mb-6 md:mb-0">
               {profile.avatar ? (
                 <img
                   src={profile.avatar}
                   alt={profile.username}
-                  className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-gray-200 flex-shrink-0"
                 />
               ) : (
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center border-4 border-gray-200">
-                  <span className="text-white text-2xl font-bold">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center border-4 border-gray-200 flex-shrink-0">
+                  <span className="text-white text-xl sm:text-2xl font-bold">
                     {profile.username[0]?.toUpperCase()}
                   </span>
                 </div>
               )}
               
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 break-words">
                   {profile.username}
                 </h1>
                 
                 {profile.bio && (
-                  <p className="text-gray-600 mb-3 max-w-md">
+                  <p className="text-gray-600 mb-3 max-w-md text-sm sm:text-base">
                     {profile.bio}
                   </p>
                 )}
                 
-                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-500">
                   <div className="flex items-center space-x-1">
-                    <Calendar className="w-4 h-4" />
+                    <Calendar className="w-4 h-4 flex-shrink-0" />
                     <span>Joined {new Date(profile.createdAt).toLocaleDateString()}</span>
                   </div>
                   

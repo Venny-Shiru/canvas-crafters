@@ -101,17 +101,8 @@ const AuthContext = createContext<{
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // API base URL
-  // PRODUCTION HARDCODED FIX - Always use Railway in production
+  // API base URL - Simplified configuration
   const API_BASE_URL = (() => {
-    // Force Railway URL for production (Vercel deployment)
-    if (window.location.hostname.includes('vercel.app') || window.location.hostname.includes('canvas-crafters')) {
-      const productionUrl = 'https://canvas-crafters-production.up.railway.app/api';
-      console.log('🚂 PRODUCTION: Hardcoded Railway URL:', productionUrl);
-      return productionUrl;
-    }
-    
-    // Try environment variable for other environments
     const envUrl = import.meta.env.VITE_API_URL;
     if (envUrl) {
       console.log('🌐 Using environment API URL:', envUrl);

@@ -103,9 +103,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // API base URL - Simplified configuration
   const API_BASE_URL = (() => {
+    console.log('🔍 Environment check:', {
+      NODE_ENV: import.meta.env.MODE,
+      VITE_API_URL: import.meta.env.VITE_API_URL,
+      VITE_SOCKET_URL: import.meta.env.VITE_SOCKET_URL,
+      hostname: window.location.hostname,
+      href: window.location.href
+    });
+    
     const envUrl = import.meta.env.VITE_API_URL;
     if (envUrl) {
-      console.log('🌐 Using environment API URL:', envUrl);
+      console.log('✅ Using environment API URL:', envUrl);
       return envUrl;
     }
     

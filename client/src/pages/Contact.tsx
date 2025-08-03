@@ -81,15 +81,15 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-white dark:bg-gray-800 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Get in Touch
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               We're here to help you create amazing collaborative artwork. Reach out with questions, feedback, or just to say hello!
             </p>
           </div>
@@ -100,19 +100,19 @@ const Contact: React.FC = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Contact Methods */}
           <div className="lg:col-span-1">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Methods</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Contact Methods</h2>
             <div className="space-y-6">
               {contactMethods.map((method, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-start space-x-4">
-                    <div className="bg-blue-100 text-blue-600 p-3 rounded-lg">
+                    <div className="bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 p-3 rounded-lg">
                       {method.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                         {method.title}
                       </h3>
-                      <p className="text-gray-600 text-sm mb-3">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
                         {method.description}
                       </p>
                       <div className="space-y-2">
@@ -121,19 +121,19 @@ const Contact: React.FC = () => {
                             href="https://github.com/Venny-Shiru/canvas-crafters"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm"
                           >
                             {method.contact}
                           </a>
                         ) : (
                           <a
                             href={`mailto:${method.contact}`}
-                            className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm"
                           >
                             {method.contact}
                           </a>
                         )}
-                        <div className="flex items-center text-gray-500 text-xs">
+                        <div className="flex items-center text-gray-500 dark:text-gray-400 text-xs">
                           <Clock className="w-3 h-3 mr-1" />
                           {method.responseTime}
                         </div>

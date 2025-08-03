@@ -120,15 +120,15 @@ const CanvasCard: React.FC<CanvasCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group relative">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group relative">
       {/* Thumbnail */}
-      <div className="aspect-video bg-gray-100 overflow-hidden relative">
+      <div className="aspect-video bg-gray-100 dark:bg-gray-700 overflow-hidden relative">
         <Link to={`/canvas/${canvas._id}`} className="block h-full">
           {canvas.thumbnail ? (
             <div className="relative w-full h-full">
               {!imageLoaded && !imageError && (
-                <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-                  <Image className="w-8 h-8 text-gray-400 animate-pulse" />
+                <div className="absolute inset-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                  <Image className="w-8 h-8 text-gray-400 dark:text-gray-500 animate-pulse" />
                 </div>
               )}
               <img
@@ -142,10 +142,10 @@ const CanvasCard: React.FC<CanvasCardProps> = ({
                 onError={handleImageError}
               />
               {imageError && (
-                <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400">
+                <div className="absolute inset-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500">
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <Image className="w-8 h-8 text-gray-300" />
+                    <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center">
+                      <Image className="w-8 h-8 text-gray-300 dark:text-gray-400" />
                     </div>
                     <span className="text-sm">No preview</span>
                   </div>
@@ -219,14 +219,14 @@ const CanvasCard: React.FC<CanvasCardProps> = ({
       <div className="p-4">
         {/* Title */}
         <Link to={`/canvas/${canvas._id}`} className="block">
-          <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
             {canvas.title}
           </h3>
         </Link>
 
         {/* Description */}
         {canvas.description && (
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
             {canvas.description}
           </p>
         )}
@@ -240,13 +240,13 @@ const CanvasCard: React.FC<CanvasCardProps> = ({
               className="w-6 h-6 rounded-full object-cover"
             />
           ) : (
-            <User className="w-6 h-6 p-1 bg-gray-200 rounded-full" />
+            <User className="w-6 h-6 p-1 bg-gray-200 dark:bg-gray-600 rounded-full" />
           )}
-          <span className="text-sm text-gray-600">{canvas.owner?.username || 'Unknown User'}</span>
+          <span className="text-sm text-gray-600 dark:text-gray-300">{canvas.owner?.username || 'Unknown User'}</span>
         </div>
 
         {/* Stats */}
-        <div className="flex items-center justify-between text-sm text-gray-500">
+        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1">
               <Eye className="w-4 h-4" />

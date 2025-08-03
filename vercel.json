@@ -1,22 +1,26 @@
 {
-  "framework": "vite",
-  "buildCommand": "cd client && VITE_API_URL=https://canvas-crafters-production.up.railway.app/api VITE_SOCKET_URL=https://canvas-crafters-production.up.railway.app npm install && npm run build",
-  "outputDirectory": "client/dist",
-  "installCommand": "cd client && npm install",
+  "version": 2,
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "status": 404
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
   "env": {
     "VITE_API_URL": "https://canvas-crafters-production.up.railway.app/api",
     "VITE_SOCKET_URL": "https://canvas-crafters-production.up.railway.app"
-  },
-  "build": {
-    "env": {
-      "VITE_API_URL": "https://canvas-crafters-production.up.railway.app/api",
-      "VITE_SOCKET_URL": "https://canvas-crafters-production.up.railway.app"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/((?!api/.*).*)",
-      "destination": "/index.html"
-    }
-  ]
+  }
 }

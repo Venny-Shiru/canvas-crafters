@@ -86,6 +86,7 @@ const Settings: React.FC = () => {
   // Update settings when user data changes in AuthContext
   useEffect(() => {
     if (state.user) {
+      console.log('Settings page: Updating avatar from auth context:', state.user.avatar);
       setSettings(prevSettings => ({
         ...prevSettings,
         username: state.user?.username || '',
@@ -355,14 +356,14 @@ const Settings: React.FC = () => {
                   
                   <div className="space-y-6">
                     {/* Avatar */}
-                    <div className="flex items-center space-x-6">
-                      <div className="relative">
+                    <div className="flex items-center space-x-4 sm:space-x-6">
+                      <div className="relative flex-shrink-0">
                         {settings.avatar ? (
                           <img
                             key={settings.avatar} // Force re-render when avatar changes
                             src={settings.avatar}
                             alt="Profile"
-                            className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
+                            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-gray-200"
                             onLoad={() => console.log('Avatar image loaded:', settings.avatar)}
                             onError={(e) => {
                               console.log('Avatar image failed to load:', settings.avatar);
@@ -370,15 +371,15 @@ const Settings: React.FC = () => {
                             }}
                           />
                         ) : (
-                          <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center border-4 border-gray-200">
-                            <User className="w-12 h-12 text-gray-400" />
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-200 flex items-center justify-center border-4 border-gray-200">
+                            <User className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400" />
                           </div>
                         )}
                         <label 
                           htmlFor="avatar-upload"
-                          className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors cursor-pointer"
+                          className="absolute bottom-0 right-0 bg-blue-600 text-white p-1.5 sm:p-2 rounded-full hover:bg-blue-700 transition-colors cursor-pointer"
                         >
-                          <Camera className="w-4 h-4" />
+                          <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
                         </label>
                         <input
                           id="avatar-upload"
@@ -388,24 +389,28 @@ const Settings: React.FC = () => {
                           className="hidden"
                         />
                       </div>
-                      <div>
-                        <h3 className="font-medium text-gray-900">Profile Photo</h3>
-                        <p className="text-sm text-gray-500 mb-2">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-medium text-gray-900 text-sm sm:text-base">Profile Photo</h3>
+                        <p className="text-xs sm:text-sm text-gray-500 mb-2">
                           Upload a photo to personalize your profile
                         </p>
                         <label 
                           htmlFor="avatar-upload" 
-                          className="text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer"
+                          className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium cursor-pointer"
                         >
                           {avatarUpload.uploading ? 'Uploading...' : 'Change Photo'}
                         </label>
-                        {/* Debug info */}
-                        <p className="text-xs text-gray-400 mt-1">
-                          Current avatar: {settings.avatar || 'none'}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          Auth context avatar: {state.user?.avatar || 'none'}
-                        </p>
+                        {/* Debug info - hide on production */}
+                        {process.env.NODE_ENV === 'development' && (
+                          <>
+                            <p className="text-xs text-gray-400 mt-1 break-all">
+                              Current avatar: {settings.avatar || 'none'}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-1 break-all">
+                              Auth context avatar: {state.user?.avatar || 'none'}
+                            </p>
+                          </>
+                        )}
                       </div>
                     </div>
 

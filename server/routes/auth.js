@@ -578,4 +578,53 @@ router.post('/reset-password/:token', [
   }
 }));
 
+// TEMPORARY: Fix avatar URLs migration
+// @route   POST /api/auth/fix-avatar-urls
+// @desc    Migrate localhost avatar URLs to Railway URLs
+// @access  Public (temporary - remove after migration)
+router.post('/fix-avatar-urls', asyncHandler(async (req, res) => {
+  try {
+    console.log('Avatar URL migration endpoint hit');
+    
+    // Find all users with localhost avatar URLs
+    const usersWithLocalhostAvatars = await User.find({
+      avatar: { $regex: /^http:\/\/localhost:5000/ }
+    });
+    
+    console.log(`Found ${usersWithLocalhostAvatars.length} users with localhost avatar URLs`);
+    
+    let updated = 0;
+    for (const user of usersWithLocalhostAvatars) {
+      const oldUrl = user.avatar;
+      
+      // Extract the path part (e.g., /uploads/avatars/...)
+      const path = oldUrl.replace('http://localhost:5000', '');
+      
+      // Set the new URL with Railway domain
+      const newUrl = `https://canvas-crafters-production.up.railway.app${path}`;
+      
+      user.avatar = newUrl;
+      await user.save();
+      updated++;
+      
+      console.log(`Updated user ${user.username}: ${oldUrl} -> ${newUrl}`);
+    }
+    
+    console.log('Avatar URL migration completed successfully!');
+    
+    res.json({
+      message: 'Avatar URL migration completed',
+      updated: updated,
+      total: usersWithLocalhostAvatars.length
+    });
+    
+  } catch (error) {
+    console.error('Avatar URL migration failed:', error);
+    res.status(500).json({ 
+      message: 'Avatar URL migration failed', 
+      error: error.message 
+    });
+  }
+}));
+
 export default router;

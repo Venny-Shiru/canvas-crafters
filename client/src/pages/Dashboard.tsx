@@ -270,23 +270,23 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 Welcome back, {state.user?.username}! 👋
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Manage your canvases and track your creative journey
               </p>
             </div>
             <Link
               to="/canvas/new"
-              className="mt-4 sm:mt-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="mt-4 sm:mt-0 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               <Plus className="w-5 h-5" />
               <span>Create New Canvas</span>
@@ -297,11 +297,11 @@ const Dashboard: React.FC = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {statCards.map((stat, index) => (
-            <div key={index} className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6">
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
-                  <p className="text-3xl font-bold text-gray-900">{stat.value.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{stat.title}</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">{stat.value.toLocaleString()}</p>
                 </div>
                 <div className={`${stat.color} p-3 rounded-xl text-white`}>
                   {stat.icon}
@@ -312,20 +312,20 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 mb-8">
           <div className="flex items-center space-x-2 mb-4">
-            <TrendingUp className="w-5 h-5 text-blue-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
+            <TrendingUp className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Activity</h2>
           </div>
           <div className="space-y-3">
             {canvases.slice(0, 3).map(canvas => (
-              <div key={canvas._id} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+              <div key={canvas._id} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-400 rounded-lg flex items-center justify-center">
                   <Palette className="w-6 h-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-medium text-gray-900">{canvas.title}</p>
-                  <p className="text-sm text-gray-500 flex items-center">
+                  <p className="font-medium text-gray-900 dark:text-white">{canvas.title}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
                     <Clock className="w-4 h-4 mr-1" />
                     Last modified {new Date(canvas.lastModified).toLocaleDateString()}
                   </p>

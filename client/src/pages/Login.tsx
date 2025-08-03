@@ -70,17 +70,17 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center">
-            <Palette className="w-12 h-12 text-blue-600" />
+            <Palette className="w-12 h-12 text-blue-600 dark:text-blue-400" />
           </div>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
+          <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">
             Welcome back
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
             Sign in to your Canvas Crafters account
           </p>
         </div>
@@ -89,11 +89,11 @@ const Login: React.FC = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {/* Global Error */}
           {state.error && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-4">
+            <div className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-md p-4">
               <div className="flex">
-                <AlertCircle className="h-5 w-5 text-red-400" />
+                <AlertCircle className="h-5 w-5 text-red-400 dark:text-red-300" />
                 <div className="ml-3">
-                  <p className="text-sm text-red-800">{state.error}</p>
+                  <p className="text-sm text-red-800 dark:text-red-200">{state.error}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ const Login: React.FC = () => {
           <div className="space-y-4">
             {/* Email or Username */}
             <div>
-              <label htmlFor="identifier" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="identifier" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Email or Username
               </label>
               <input
@@ -117,21 +117,21 @@ const Login: React.FC = () => {
                 required
                 value={formData.identifier}
                 onChange={handleChange}
-                className={`appearance-none relative block w-full px-3 py-3 border rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-base ${
+                className={`appearance-none relative block w-full px-3 py-3 border rounded-md placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-base bg-white dark:bg-gray-700 ${
                   errors.identifier 
-                    ? 'border-red-300 bg-red-50' 
-                    : 'border-gray-300'
+                    ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/50' 
+                    : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder="Enter your email or username"
               />
               {errors.identifier && (
-                <p className="mt-1 text-sm text-red-600">{errors.identifier}</p>
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.identifier}</p>
               )}
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Password
               </label>
               <div className="relative">
@@ -146,10 +146,10 @@ const Login: React.FC = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className={`appearance-none relative block w-full px-3 py-3 pr-10 border rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-base ${
+                  className={`appearance-none relative block w-full px-3 py-3 pr-10 border rounded-md placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-base bg-white dark:bg-gray-700 ${
                     errors.password 
-                      ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300'
+                      ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/50' 
+                      : 'border-gray-300 dark:border-gray-600'
                   }`}
                   placeholder="Enter your password"
                 />
@@ -159,14 +159,14 @@ const Login: React.FC = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-5 w-5 text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-200" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-5 w-5 text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-200" />
                   )}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password}</p>
               )}
             </div>
           </div>
@@ -178,9 +178,9 @@ const Login: React.FC = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded cursor-pointer"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded cursor-pointer bg-white dark:bg-gray-700"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 cursor-pointer">
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300 cursor-pointer">
                 Remember me
               </label>
             </div>
@@ -188,7 +188,7 @@ const Login: React.FC = () => {
             <div className="text-sm">
               <Link
                 to="/forgot-password"
-                className="font-medium text-blue-600 hover:text-blue-500"
+                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
               >
                 Forgot your password?
               </Link>
@@ -200,7 +200,7 @@ const Login: React.FC = () => {
             <button
               type="submit"
               disabled={state.isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {state.isLoading ? (
                 <div className="flex items-center">
@@ -215,11 +215,11 @@ const Login: React.FC = () => {
 
           {/* Sign up link */}
           <div className="text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
               >
                 Sign up for free
               </Link>
@@ -228,12 +228,12 @@ const Login: React.FC = () => {
         </form>
 
         {/* Demo Account Info */}
-        <div className="mt-6 p-4 bg-blue-50 rounded-md">
-          <h3 className="text-sm font-medium text-blue-800 mb-2">Quick Demo</h3>
-          <p className="text-xs text-blue-700">
+        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/50 rounded-md">
+          <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">Quick Demo</h3>
+          <p className="text-xs text-blue-700 dark:text-blue-300">
             Want to try Canvas Crafters without signing up? Use the demo account:
           </p>
-          <div className="mt-2 text-xs text-blue-600 font-mono">
+          <div className="mt-2 text-xs text-blue-600 dark:text-blue-400 font-mono">
             <div>Email: demo@canvascrafters.com</div>
             <div>Username: demo_user</div>
             <div>Password: demo123</div>

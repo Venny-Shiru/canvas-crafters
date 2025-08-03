@@ -189,11 +189,11 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* Profile Header */}
-        <div className="bg-white rounded-2xl shadow-md p-8 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             
             {/* Profile Info */}
@@ -202,10 +202,10 @@ const Profile: React.FC = () => {
                 <img
                   src={profile.avatar}
                   alt={profile.username}
-                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-gray-200 flex-shrink-0"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-gray-200 dark:border-gray-600 flex-shrink-0"
                 />
               ) : (
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center border-4 border-gray-200 flex-shrink-0">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center border-4 border-gray-200 dark:border-gray-600 flex-shrink-0">
                   <span className="text-white text-xl sm:text-2xl font-bold">
                     {profile.username[0]?.toUpperCase()}
                   </span>
@@ -213,17 +213,17 @@ const Profile: React.FC = () => {
               )}
               
               <div className="min-w-0 flex-1">
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 break-words">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2 break-words">
                   {profile.username}
                 </h1>
                 
                 {profile.bio && (
-                  <p className="text-gray-600 mb-3 max-w-md text-sm sm:text-base">
+                  <p className="text-gray-600 dark:text-gray-300 mb-3 max-w-md text-sm sm:text-base">
                     {profile.bio}
                   </p>
                 )}
                 
-                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-500">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center space-x-1">
                     <Calendar className="w-4 h-4 flex-shrink-0" />
                     <span>Joined {new Date(profile.createdAt).toLocaleDateString()}</span>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { 
   User, 
   Lock, 
@@ -39,6 +40,7 @@ interface UserSettings {
 
 const Settings: React.FC = () => {
   const { state, logout, refreshUser } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -96,6 +98,14 @@ const Settings: React.FC = () => {
       }));
     }
   }, [state.user]);
+
+  // Sync theme context with settings state
+  useEffect(() => {
+    setSettings(prevSettings => ({
+      ...prevSettings,
+      preferences: { ...prevSettings.preferences, theme }
+    }));
+  }, [theme]);
 
   const fetchUserSettings = async () => {
     try {
@@ -297,26 +307,26 @@ const Settings: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading settings...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading settings...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
-            <SettingsIcon className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
+            <SettingsIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
           </div>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             Manage your account settings and preferences
           </p>
         </div>
@@ -325,7 +335,7 @@ const Settings: React.FC = () => {
           
           {/* Sidebar */}
           <div className="lg:w-64">
-            <div className="bg-white rounded-2xl shadow-md p-2">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-2">
               <nav className="space-y-1">
                 {tabs.map(tab => (
                   <button
@@ -333,8 +343,8 @@ const Settings: React.FC = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg transition-colors ${
                       activeTab === tab.id
-                        ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border-r-2 border-blue-700 dark:border-blue-400'
+                        : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
                     {tab.icon}
@@ -347,12 +357,12 @@ const Settings: React.FC = () => {
 
           {/* Main Content */}
           <div className="flex-1">
-            <div className="bg-white rounded-2xl shadow-md">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md">
               
               {/* Profile Tab */}
               {activeTab === 'profile' && (
                 <div className="p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Information</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Information</h2>
                   
                   <div className="space-y-6">
                     {/* Avatar */}
@@ -363,7 +373,7 @@ const Settings: React.FC = () => {
                             key={settings.avatar} // Force re-render when avatar changes
                             src={settings.avatar}
                             alt="Profile"
-                            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-gray-200"
+                            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-gray-200 dark:border-gray-600"
                             onLoad={() => console.log('Avatar image loaded:', settings.avatar)}
                             onError={(e) => {
                               console.log('Avatar image failed to load:', settings.avatar);
@@ -371,13 +381,13 @@ const Settings: React.FC = () => {
                             }}
                           />
                         ) : (
-                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-200 flex items-center justify-center border-4 border-gray-200">
-                            <User className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400" />
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center border-4 border-gray-200 dark:border-gray-600">
+                            <User className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 dark:text-gray-300" />
                           </div>
                         )}
                         <label 
                           htmlFor="avatar-upload"
-                          className="absolute bottom-0 right-0 bg-blue-600 text-white p-1.5 sm:p-2 rounded-full hover:bg-blue-700 transition-colors cursor-pointer"
+                          className="absolute bottom-0 right-0 bg-blue-600 dark:bg-blue-500 text-white p-1.5 sm:p-2 rounded-full hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors cursor-pointer"
                         >
                           <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
                         </label>
@@ -390,13 +400,13 @@ const Settings: React.FC = () => {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="font-medium text-gray-900 text-sm sm:text-base">Profile Photo</h3>
-                        <p className="text-xs sm:text-sm text-gray-500 mb-2">
+                        <h3 className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">Profile Photo</h3>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2">
                           Upload a photo to personalize your profile
                         </p>
                         <label 
                           htmlFor="avatar-upload" 
-                          className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium cursor-pointer"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs sm:text-sm font-medium cursor-pointer"
                         >
                           {avatarUpload.uploading ? 'Uploading...' : 'Change Photo'}
                         </label>
@@ -416,33 +426,33 @@ const Settings: React.FC = () => {
 
                     {/* Username */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Username
                       </label>
                       <input
                         type="text"
                         value={settings.username}
                         onChange={(e) => setSettings({ ...settings, username: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       />
                     </div>
 
                     {/* Email */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Email Address
                       </label>
                       <input
                         type="email"
                         value={settings.email}
                         onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       />
                     </div>
 
                     {/* Bio */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Bio
                       </label>
                       <textarea
@@ -450,10 +460,10 @@ const Settings: React.FC = () => {
                         onChange={(e) => setSettings({ ...settings, bio: e.target.value })}
                         rows={4}
                         placeholder="Tell others about yourself and your artistic journey..."
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400"
                         maxLength={500}
                       />
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                         {settings.bio.length}/500 characters
                       </p>
                     </div>
@@ -648,16 +658,21 @@ const Settings: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Theme
                       </label>
                       <select
-                        value={settings.preferences.theme}
-                        onChange={(e) => setSettings({
-                          ...settings,
-                          preferences: { ...settings.preferences, theme: e.target.value as 'light' | 'dark' | 'auto' }
-                        })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        value={theme}
+                        onChange={(e) => {
+                          const newTheme = e.target.value as 'light' | 'dark' | 'auto';
+                          setTheme(newTheme);
+                          // Also update the settings state for consistency
+                          setSettings({
+                            ...settings,
+                            preferences: { ...settings.preferences, theme: newTheme }
+                          });
+                        }}
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       >
                         <option value="light">Light</option>
                         <option value="dark">Dark</option>
@@ -791,12 +806,12 @@ const Settings: React.FC = () => {
 
               {/* Save Button */}
               {activeTab !== 'security' && (
-                <div className="border-t border-gray-200 px-6 py-4">
+                <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-4">
                   <div className="flex justify-end">
                     <button
                       onClick={handleSaveSettings}
                       disabled={saving}
-                      className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="flex items-center space-x-2 bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <Save className="w-5 h-5" />
                       <span>{saving ? 'Saving...' : 'Save Changes'}</span>

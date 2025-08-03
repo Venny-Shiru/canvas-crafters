@@ -1,0 +1,13 @@
+<!-- Simple Canvas Crafters Icon for PWA -->
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" rx="24" fill="#2563eb"/>
+  <rect x="36" y="36" width="120" height="90" rx="6" fill="white"/>
+  <rect x="129" y="105" width="3" height="30" rx="2" fill="#fbbf24" transform="rotate(45 130.5 120)"/>
+  <circle cx="130.5" cy="106.5" r="4.5" fill="#f59e0b"/>
+  <path d="M45 52.5Q67.5 45 90 52.5Q112.5 60 135 52.5" stroke="#2563eb" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M52.5 67.5Q75 60 97.5 67.5Q120 75 142.5 67.5" stroke="#10b981" stroke-width="2.25" stroke-linecap="round" fill="none"/>
+  <path d="M60 82.5Q82.5 75 105 82.5Q127.5 90 150 82.5" stroke="#f59e0b" stroke-width="2.25" stroke-linecap="round" fill="none"/>
+  <circle cx="142.5" cy="45" r="3" fill="#10b981"/>
+  <circle cx="150" cy="48.75" r="2.25" fill="#ef4444"/>
+  <circle cx="146.25" cy="54.375" r="2.25" fill="#8b5cf6"/>
+</svg>

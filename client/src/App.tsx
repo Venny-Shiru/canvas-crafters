@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 // Pages
 import Home from './pages/Home';
@@ -22,6 +23,21 @@ import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
 function App() {
+  // Register service worker for PWA functionality
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  }, []);
+
   return (
     <ThemeProvider>
       <AuthProvider>
@@ -148,6 +164,7 @@ function App() {
           </Routes>
           </main>
           <Footer />
+          <PWAInstallPrompt />
         </div>
       </Router>
     </AuthProvider>

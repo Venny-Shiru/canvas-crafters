@@ -4,11 +4,11 @@
 
 Canvas Crafters is a real-time collaborative digital canvas platform that enables artists, designers, and creative teams to work together seamlessly. Built with modern web technologies, it offers professional drawing tools with the power of real-time collaboration.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters.netlify.app)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Venny-Shiru/canvas-crafters)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-🌐 **Live Application**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
+🌐 **Live Application**: [https://canvas-crafters.netlify.app](https://canvas-crafters.netlify.app)
 
 🚀 **API Status**: Backend integrated with frontend (full-stack deployment)
 
@@ -48,6 +48,13 @@ Canvas Crafters is a real-time collaborative digital canvas platform that enable
 - Contact and support system
 
 ## 🆕 Recent Updates (August 2025)
+
+### ✅ **Successful Netlify Migration** (Latest Update)
+- **Resolved URL Corruption Issues**: Migrated from Vercel to Netlify for improved SPA routing
+- **Enhanced CORS Configuration**: Updated backend to support Netlify deployment
+- **Improved Build Process**: Streamlined environment variable injection
+- **Better Reliability**: Eliminated deployment routing issues
+- **Faster Deployment**: Optimized build configuration for Netlify
 
 ### ✅ **Enhanced Canvas Editor**
 - **20+ Professional Tools**: Complete redesign with industry-standard tools
@@ -276,13 +283,15 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 Your Canvas Crafters application is successfully deployed and running with the latest enhancements!
 
-**🌐 Frontend (Vercel)**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
+**🚀 Frontend (Netlify)**: [https://canvas-crafters.netlify.app](https://canvas-crafters.netlify.app)
 - ✅ Enhanced canvas editor with 20+ professional tools
-- ✅ Contact page with comprehensive support system
+- ✅ Contact page with comprehensive support system  
 - ✅ Site-wide footer with consistent navigation
 - ✅ Improved authentication flow with password reset
 - ✅ Responsive design optimized for all devices
 - ✅ Real-time collaboration features
+- ✅ Reliable SPA routing (no URL corruption issues)
+- ✅ Optimized environment variable injection
 
 **🚂 Backend (Railway)**: [https://canvas-crafters-production.up.railway.app](https://canvas-crafters-production.up.railway.app)
 - ✅ Enhanced authentication system with password reset
@@ -291,6 +300,7 @@ Your Canvas Crafters application is successfully deployed and running with the l
 - ✅ Socket.io real-time collaboration engine
 - ✅ JWT authentication with secure token handling
 - ✅ MongoDB Atlas integration
+- ✅ CORS configured for Netlify deployment
 
 **🗄️ Database (MongoDB Atlas)**: Connected and operational
 - ✅ Enhanced user model with profile features
@@ -301,14 +311,14 @@ Your Canvas Crafters application is successfully deployed and running with the l
 ### 🔧 Deployment Architecture
 
 ```
-Users → Vercel (Frontend) → Railway (Backend API) → MongoDB Atlas (Database)
-                              ↓
-                    Real-time Socket.io Communication
+Users → Netlify (Frontend) → Railway (Backend API) → MongoDB Atlas (Database)
+                               ↓
+                     Real-time Socket.io Communication
 ```
 
 ### 🎯 Current Environment Variables
 
-**Production Environment (Hybrid Deployment):**
+**Production Environment (Netlify + Railway):**
 ```env
 VITE_API_URL=https://canvas-crafters-production.up.railway.app/api
 VITE_SOCKET_URL=https://canvas-crafters-production.up.railway.app
@@ -321,10 +331,10 @@ JWT_SECRET=[secured]
 
 - **Build Time**: ~2-3 minutes per deployment
 - **Cold Start**: <2 seconds
-- **Global CDN**: Vercel Edge Network with global coverage
-- **Uptime**: 99.9% (Railway + Vercel SLA)
+- **Global CDN**: Netlify Edge Network with global coverage
+- **Uptime**: 99.9% (Railway + Netlify SLA)
 - **Database**: MongoDB Atlas M0 (Free Tier) with 512MB storage
-- **Latest Deployment**: August 2025 with major feature enhancements
+- **Latest Deployment**: August 2025 with Netlify migration for improved reliability
 
 ### 💰 Current Hosting Costs
 

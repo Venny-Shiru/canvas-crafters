@@ -103,14 +103,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // API base URL - Simplified configuration
   const API_BASE_URL = (() => {
-    console.log('🔍 Environment check:', {
-      NODE_ENV: import.meta.env.MODE,
-      VITE_API_URL: import.meta.env.VITE_API_URL,
-      VITE_SOCKET_URL: import.meta.env.VITE_SOCKET_URL,
-      hostname: window.location.hostname,
-      href: window.location.href
-    });
-    
     const envUrl = import.meta.env.VITE_API_URL;
     if (envUrl) {
       console.log('✅ Using environment API URL:', envUrl);
@@ -177,43 +169,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     dispatch({ type: 'AUTH_START' });
 
     try {
-      console.log('🔐 Frontend login attempt:', { 
-        identifier, 
-        API_BASE_URL, 
-        userAgent: navigator.userAgent,
-        isMobile: /Mobi|Android/i.test(navigator.userAgent)
-      });
-      
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ identifier, password }),
       });
 
-      console.log('🌐 Login response status:', response.status);
-      console.log('📱 Response headers:', Object.fromEntries(response.headers.entries()));
-      
       const data = await response.json();
-      console.log('📦 Login response data:', data);
 
       if (response.ok) {
-        console.log('✅ Login successful, storing token');
         dispatch({
           type: 'AUTH_SUCCESS',
           payload: { user: data.user, token: data.token },
         });
       } else {
-        console.log('❌ Login failed:', data.message);
         throw new Error(data.message || 'Login failed');
       }
     } catch (error) {
-      console.error('🚨 Login error:', error);
-      console.error('🔍 Error details:', {
-        name: error instanceof Error ? error.name : 'Unknown',
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : 'No stack trace'
-      });
-      
       let message = 'Login failed';
       if (error instanceof TypeError && error.message.includes('fetch')) {
         message = 'Network error - please check your internet connection';

@@ -115,7 +115,7 @@ const PWAInstallPrompt: React.FC = () => {
         </div>
         
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-          Install Canvas Crafters as an app for faster access and a better experience!
+          Get faster access and a better experience with our app!
         </p>
         
         <div className="flex space-x-2">

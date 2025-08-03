@@ -1,0 +1,13 @@
+# Netlify configuration for Canvas Crafters
+[build]
+  command = "cd client && npm install && npm run build"
+  publish = "client/dist"
+
+[build.environment]
+  VITE_API_URL = "https://canvas-crafters-production.up.railway.app/api"
+  VITE_SOCKET_URL = "https://canvas-crafters-production.up.railway.app"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -122,9 +122,9 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen dark:bg-gray-900">
       {/* Hero Section - Updated gradient backgrounds */}
-      <section className="py-20">
+      <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
@@ -174,8 +174,8 @@ const Home: React.FC = () => {
 
             {/* Interactive Canvas Preview Slideshow */}
             <div className="mt-16 relative">
-              <div className="bg-white rounded-2xl shadow-2xl p-4 mx-auto max-w-4xl">
-                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg relative overflow-hidden">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 mx-auto max-w-4xl">
+                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-lg relative overflow-hidden">
                   {/* Slideshow Images */}
                   <div className="absolute inset-0">
                     {slideshowSlides.map((slide, index) => (
@@ -246,19 +246,19 @@ const Home: React.FC = () => {
               </div>
               
               {/* Floating elements */}
-              <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3 hidden lg:block">
+              <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 hidden lg:block">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
                     {slideshowSlides[currentSlide].users.length} users online
                   </span>
                 </div>
               </div>
               
-              <div className="absolute bottom-4 right-4 bg-white rounded-lg shadow-lg p-3 hidden lg:block">
+              <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 hidden lg:block">
                 <div className="flex items-center space-x-2">
                   <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                  <span className="text-sm text-gray-600">Auto-saved</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Auto-saved</span>
                 </div>
               </div>
             </div>
@@ -267,13 +267,13 @@ const Home: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Everything You Need to Create
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Professional-grade tools meet seamless collaboration in one powerful platform
             </p>
           </div>
@@ -281,14 +281,14 @@ const Home: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center group">
-                <div className="bg-gray-50 rounded-2xl p-6 group-hover:bg-gray-100 transition-colors duration-200">
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-6 group-hover:bg-gray-100 dark:group-hover:bg-gray-600 transition-colors duration-200">
                   <div className="flex justify-center mb-4">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-300">
                     {feature.description}
                   </p>
                 </div>
@@ -299,7 +299,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -315,8 +315,8 @@ const Home: React.FC = () => {
               <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">
                 1
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Create Your Canvas</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Create Your Canvas</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Start with a blank canvas or choose from our templates. Set your dimensions and preferences.
               </p>
             </div>
@@ -325,8 +325,8 @@ const Home: React.FC = () => {
               <div className="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Invite Collaborators</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Invite Collaborators</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Share your canvas link with team members. They can join instantly and start contributing.
               </p>
             </div>
@@ -335,8 +335,8 @@ const Home: React.FC = () => {
               <div className="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4">
                 3
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Create Together</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Create Together</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Watch as ideas come to life in real-time. Save, share, and export your masterpiece.
               </p>
             </div>
@@ -345,26 +345,26 @@ const Home: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Loved by Creators Worldwide
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               See what artists, designers, and teams are saying about Canvas Crafters
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 rounded-2xl p-6">
+              <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-6">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-4 italic">
+                <p className="text-gray-700 dark:text-gray-300 mb-4 italic">
                   "{testimonial.content}"
                 </p>
                 <div className="flex items-center">
@@ -374,8 +374,8 @@ const Home: React.FC = () => {
                     className="w-10 h-10 rounded-full object-cover mr-3"
                   />
                   <div>
-                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    <p className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
                   </div>
                 </div>
               </div>

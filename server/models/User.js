@@ -98,25 +98,33 @@ userSchema.methods.toSafeObject = function() {
   const userObject = this.toObject();
   delete userObject.password;
   
-  // Convert relative avatar URLs to absolute URLs
-  if (userObject.avatar && userObject.avatar.startsWith('/uploads/')) {
-    // Priority order: SERVER_URL > Railway domain > Hardcoded production > localhost
-    let baseUrl = process.env.SERVER_URL;
-    
-    if (!baseUrl && process.env.RAILWAY_PUBLIC_DOMAIN) {
-      baseUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+  // Convert relative avatar URLs to absolute URLs and fix localhost URLs
+  if (userObject.avatar) {
+    // Fix existing localhost URLs to Railway URLs
+    if (userObject.avatar.startsWith('http://localhost:5000')) {
+      const path = userObject.avatar.replace('http://localhost:5000', '');
+      userObject.avatar = `https://canvas-crafters-production.up.railway.app${path}`;
+      console.log('Fixed localhost avatar URL to:', userObject.avatar);
     }
-    
-    if (!baseUrl && process.env.NODE_ENV === 'production') {
-      baseUrl = 'https://canvas-crafters-production.up.railway.app';
+    // Convert relative URLs to absolute URLs
+    else if (userObject.avatar.startsWith('/uploads/')) {
+      let baseUrl = process.env.SERVER_URL;
+      
+      if (!baseUrl && process.env.RAILWAY_PUBLIC_DOMAIN) {
+        baseUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+      }
+      
+      if (!baseUrl && process.env.NODE_ENV === 'production') {
+        baseUrl = 'https://canvas-crafters-production.up.railway.app';
+      }
+      
+      if (!baseUrl) {
+        baseUrl = 'http://localhost:5000';
+      }
+      
+      userObject.avatar = `${baseUrl}${userObject.avatar}`;
+      console.log('Generated avatar URL:', userObject.avatar);
     }
-    
-    if (!baseUrl) {
-      baseUrl = 'http://localhost:5000';
-    }
-    
-    userObject.avatar = `${baseUrl}${userObject.avatar}`;
-    console.log('Avatar URL generated:', userObject.avatar);
   }
   
   return userObject;

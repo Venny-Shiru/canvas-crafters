@@ -1,11 +1,17 @@
 {
   "framework": "vite",
-  "buildCommand": "cd client && npm install && npm run build",
+  "buildCommand": "cd client && VITE_API_URL=https://canvas-crafters-production.up.railway.app/api VITE_SOCKET_URL=https://canvas-crafters-production.up.railway.app npm install && npm run build",
   "outputDirectory": "client/dist",
   "installCommand": "cd client && npm install",
   "env": {
     "VITE_API_URL": "https://canvas-crafters-production.up.railway.app/api",
     "VITE_SOCKET_URL": "https://canvas-crafters-production.up.railway.app"
+  },
+  "build": {
+    "env": {
+      "VITE_API_URL": "https://canvas-crafters-production.up.railway.app/api",
+      "VITE_SOCKET_URL": "https://canvas-crafters-production.up.railway.app"
+    }
   },
   "rewrites": [
     {

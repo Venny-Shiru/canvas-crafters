@@ -102,11 +102,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // API base URL
-  // Dynamic API URL - fallback to environment variable or localhost
+  // Dynamic API URL - fallback to environment variable or Railway production
   const API_BASE_URL = (() => {
-    // Use environment variable or localhost fallback
-    return import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    // Try environment variable first, then fallback to Railway production URL
+    const envUrl = import.meta.env.VITE_API_URL;
+    if (envUrl) {
+      console.log('🌐 Using environment API URL:', envUrl);
+      return envUrl;
+    }
+    
+    // Production fallback - always use Railway for production
+    if (import.meta.env.PROD || window.location.hostname.includes('vercel.app')) {
+      const railwayUrl = 'https://canvas-crafters-production.up.railway.app/api';
+      console.log('🚂 Using Railway production fallback:', railwayUrl);
+      return railwayUrl;
+    }
+    
+    // Development fallback
+    const devUrl = 'http://localhost:5000/api';
+    console.log('🔧 Using development fallback:', devUrl);
+    return devUrl;
   })();
+
+  // Log the final API URL being used
+  console.log('📡 Final API_BASE_URL:', API_BASE_URL);
 
   // Create API headers
   const getHeaders = useCallback((includeAuth = false, token?: string) => {

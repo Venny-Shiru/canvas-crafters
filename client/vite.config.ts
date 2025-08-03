@@ -15,5 +15,9 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true
+  },
+  define: {
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || 'https://canvas-crafters-production.up.railway.app/api'),
+    'process.env.VITE_SOCKET_URL': JSON.stringify(process.env.VITE_SOCKET_URL || 'https://canvas-crafters-production.up.railway.app'),
   }
 });

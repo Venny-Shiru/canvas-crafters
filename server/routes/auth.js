@@ -327,7 +327,20 @@ router.post('/upload-avatar', auth, (req, res, next) => {
     await user.save();
 
     // Convert to absolute URL for response
-    const baseUrl = process.env.SERVER_URL || 'http://localhost:5000';
+    let baseUrl = process.env.SERVER_URL;
+    
+    if (!baseUrl && process.env.RAILWAY_PUBLIC_DOMAIN) {
+      baseUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+    }
+    
+    if (!baseUrl && process.env.NODE_ENV === 'production') {
+      baseUrl = 'https://canvas-crafters-production.up.railway.app';
+    }
+    
+    if (!baseUrl) {
+      baseUrl = 'http://localhost:5000';
+    }
+    
     const absoluteAvatarUrl = `${baseUrl}${avatarUrl}`;
 
     console.log('Avatar upload successful, responding with:', {

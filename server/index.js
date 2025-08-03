@@ -17,11 +17,12 @@ import canvasSocket from './sockets/canvasSocket.js';
 // Load environment variables
 dotenv.config();
 
-// CORS configuration function to handle all Vercel deployments
+// CORS configuration function to handle all deployments
 const corsOrigins = (origin, callback) => {
   const allowedOrigins = [
     process.env.CLIENT_URL || "http://localhost:5173",
     "https://canvas-crafters.vercel.app",
+    "https://canvas-crafters.netlify.app", // Add Netlify domain
     "http://localhost:5174",
     "http://localhost:5175",
     "http://localhost:5176"
@@ -32,10 +33,16 @@ const corsOrigins = (origin, callback) => {
     allowedOrigins.push(origin);
   }
   
+  // Allow Netlify preview deployments
+  if (origin && origin.match(/^https:\/\/.*\.netlify\.app$/)) {
+    allowedOrigins.push(origin);
+  }
+  
   // Allow all origins in allowedOrigins or no origin (for mobile apps)
   if (!origin || allowedOrigins.indexOf(origin) !== -1) {
     callback(null, true);
   } else {
+    console.log('CORS blocked origin:', origin);
     callback(new Error('Not allowed by CORS'));
   }
 };

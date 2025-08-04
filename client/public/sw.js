@@ -1,12 +1,10 @@
 // Service Worker for Canvas Crafters PWA
-const CACHE_NAME = 'canvas-crafters-v1';
+const CACHE_NAME = 'canvas-crafters-v2';
 const STATIC_CACHE_URLS = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
   '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/icons/icon-192x192.svg',
+  '/icons/app-icon.svg'
 ];
 
 // Install event - cache static assets

@@ -12,15 +12,22 @@ const PWAInstallPrompt: React.FC = () => {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
+    // Enhanced debugging
+    console.log('PWA Install Prompt: Component mounted');
+    
     // Check if app is already installed
     const checkIfInstalled = () => {
-      if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
-        setIsInstalled(true);
-      }
+      const isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+      const isInWebAppiOS = (window.navigator as any).standalone === true;
+      const isInstalled = isStandalone || isInWebAppiOS;
+      
+      console.log('PWA Install Check:', { isStandalone, isInWebAppiOS, isInstalled });
+      setIsInstalled(isInstalled);
     };
 
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
+      console.log('PWA Install: beforeinstallprompt event fired!');
       e.preventDefault();
       const installEvent = e as BeforeInstallPromptEvent;
       setDeferredPrompt(installEvent);
@@ -28,22 +35,26 @@ const PWAInstallPrompt: React.FC = () => {
       // Show install prompt after a delay (better UX)
       setTimeout(() => {
         if (!isInstalled) {
+          console.log('PWA Install: Showing install prompt');
           setShowInstallPrompt(true);
         }
-      }, 5000);
+      }, 3000); // Reduced delay for testing
     };
 
     // Listen for app installed event
     const handleAppInstalled = () => {
+      console.log('PWA Install: App installed event fired!');
       setIsInstalled(true);
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
-      console.log('Canvas Crafters PWA was installed');
     };
 
     checkIfInstalled();
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
+
+    // Debug: Check if events are supported
+    console.log('PWA Install: Event listeners added');
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);

@@ -48,7 +48,7 @@
       "url": "/canvas/new",
       "icons": [
         {
-          "src": "/vite.svg",
+          "src": "/icons/icon-192x192.svg",
           "sizes": "96x96"
         }
       ]
@@ -60,7 +60,7 @@
       "url": "/explore",
       "icons": [
         {
-          "src": "/vite.svg",
+          "src": "/icons/icon-192x192.svg",
           "sizes": "96x96"
         }
       ]

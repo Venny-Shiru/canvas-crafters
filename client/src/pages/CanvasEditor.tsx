@@ -27,7 +27,10 @@ import {
   Palette,
   Star,
   Navigation,
-  Target
+  Target,
+  Edit3,
+  Upload,
+  FileImage
 } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 
@@ -63,7 +66,7 @@ interface DrawingTool {
   type: 'brush' | 'eraser' | 'line' | 'circle' | 'rectangle' | 'fill' | 'text' | 
         'watercolor' | 'airbrush' | 'texture' | 'oil' | 'marker' | 'chalk' |
         'lasso' | 'magic-wand' | 'select-rect' | 'eyedropper' | 'gradient' |
-        'move' | 'transform' | 'polygon' | 'star' | 'arrow';
+        'move' | 'transform' | 'polygon' | 'star' | 'arrow' | 'pencil';
   size: number;
   color: string;
   opacity: number;
@@ -212,6 +215,7 @@ const CanvasEditor: React.FC = () => {
   const [showUsers, setShowUsers] = useState(true);
   const [undoStack, setUndoStack] = useState<ImageData[]>([]);
   const [redoStack, setRedoStack] = useState<ImageData[]>([]);
+  const [importFileRef, setImportFileRef] = useState<HTMLInputElement | null>(null);
 
   // Initialize canvas and socket connection
   useEffect(() => {
@@ -458,6 +462,27 @@ const CanvasEditor: React.FC = () => {
     context.globalAlpha = tool.opacity;
     
     switch (tool.type) {
+      case 'pencil':
+        context.strokeStyle = tool.color;
+        context.lineWidth = Math.max(1, tool.size * 0.5); // Pencil is thinner
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+        context.globalAlpha = tool.opacity;
+        // Add slight texture effect for pencil
+        context.shadowColor = 'transparent';
+        context.shadowBlur = 0;
+        break;
+        
+      case 'brush':
+        context.strokeStyle = tool.color;
+        context.lineWidth = tool.size;
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+        context.globalAlpha = tool.opacity;
+        context.shadowColor = 'transparent';
+        context.shadowBlur = 0;
+        break;
+        
       case 'watercolor':
         context.strokeStyle = tool.color;
         context.lineWidth = tool.size;
@@ -721,6 +746,67 @@ const CanvasEditor: React.FC = () => {
     link.click();
   };
 
+  const triggerImageImport = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file || !contextRef.current || !canvasRef.current) return;
+
+      // Check if file is an image
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        const img = new Image();
+        img.onload = () => {
+          const context = contextRef.current;
+          const canvas = canvasRef.current;
+          if (!context || !canvas) return;
+
+          // Calculate scaling to fit the canvas while maintaining aspect ratio
+          const canvasAspect = canvas.width / canvas.height;
+          const imageAspect = img.width / img.height;
+          
+          let drawWidth, drawHeight, drawX, drawY;
+          
+          if (imageAspect > canvasAspect) {
+            // Image is wider than canvas
+            drawWidth = canvas.width;
+            drawHeight = canvas.width / imageAspect;
+            drawX = 0;
+            drawY = (canvas.height - drawHeight) / 2;
+          } else {
+            // Image is taller than canvas
+            drawWidth = canvas.height * imageAspect;
+            drawHeight = canvas.height;
+            drawX = (canvas.width - drawWidth) / 2;
+            drawY = 0;
+          }
+
+          // Draw the image
+          context.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+          saveToUndoStack();
+
+          // Emit the change to other users
+          if (socketRef.current) {
+            socketRef.current.emit('canvas-updated', {
+              canvasId: id,
+              imageData: canvas.toDataURL()
+            });
+          }
+        };
+        img.src = loadEvent.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
+
   const clearCanvas = () => {
     if (!contextRef.current || !canvas) return;
 
@@ -732,6 +818,7 @@ const CanvasEditor: React.FC = () => {
   const tools = [
     // Basic Drawing Tools
     { type: 'brush' as const, icon: <Brush className="w-5 h-5" />, name: 'Brush', category: 'Basic' },
+    { type: 'pencil' as const, icon: <Edit3 className="w-5 h-5" />, name: 'Pencil', category: 'Basic' },
     { type: 'eraser' as const, icon: <Eraser className="w-5 h-5" />, name: 'Eraser', category: 'Basic' },
     
     // Advanced Brushes
@@ -846,8 +933,17 @@ const CanvasEditor: React.FC = () => {
             <button
               onClick={downloadCanvas}
               className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              title="Download Canvas"
             >
               <Download className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={triggerImageImport}
+              className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              title="Import Image"
+            >
+              <Upload className="w-5 h-5" />
             </button>
 
             <button

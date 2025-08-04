@@ -29,8 +29,7 @@ import {
   Navigation,
   Target,
   Edit3,
-  Upload,
-  FileImage
+  Upload
 } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 
@@ -215,7 +214,6 @@ const CanvasEditor: React.FC = () => {
   const [showUsers, setShowUsers] = useState(true);
   const [undoStack, setUndoStack] = useState<ImageData[]>([]);
   const [redoStack, setRedoStack] = useState<ImageData[]>([]);
-  const [importFileRef, setImportFileRef] = useState<HTMLInputElement | null>(null);
 
   // Initialize canvas and socket connection
   useEffect(() => {
@@ -390,15 +388,22 @@ const CanvasEditor: React.FC = () => {
   };
 
   const startDrawing = useCallback((event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!contextRef.current) return;
+    if (!contextRef.current) {
+      console.log('No context available for drawing');
+      return;
+    }
 
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      console.log('No canvas available for drawing');
+      return;
+    }
 
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
+    console.log('Starting drawing at:', { x, y, tool: currentTool.type });
     setIsDrawing(true);
 
     const context = contextRef.current;
@@ -592,6 +597,8 @@ const CanvasEditor: React.FC = () => {
     }
 
     if (!isDrawing) return;
+
+    console.log('Drawing at:', { x, y, isDrawing });
 
     // Handle different drawing modes
     if (['watercolor', 'airbrush', 'oil', 'chalk'].includes(currentTool.type)) {

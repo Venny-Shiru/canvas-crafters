@@ -38,7 +38,7 @@ const PWAInstallPrompt: React.FC = () => {
           console.log('PWA Install: Showing install prompt');
           setShowInstallPrompt(true);
         }
-      }, 1000); // Reduced delay for testing
+      }, 2000); // Reasonable delay for better UX
     };
 
     // Listen for app installed event
@@ -93,7 +93,7 @@ const PWAInstallPrompt: React.FC = () => {
     const dismissedTime = localStorage.getItem('pwa-install-dismissed');
     if (dismissedTime) {
       const hoursSinceDismissed = (Date.now() - parseInt(dismissedTime)) / (1000 * 60 * 60);
-      if (hoursSinceDismissed < 24) {
+      if (hoursSinceDismissed < 72) { // Increased to 72 hours to be less intrusive
         setShowInstallPrompt(false);
       }
     }
@@ -104,16 +104,16 @@ const PWAInstallPrompt: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4">
-        <div className="flex items-start justify-between mb-3">
+    <div className="fixed bottom-4 right-4 max-w-sm z-40">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+        <div className="flex items-start justify-between mb-2">
           <div className="flex items-center space-x-2">
-            <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg">
-              <Download className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <div className="bg-blue-100 dark:bg-blue-900 p-1.5 rounded">
+              <Download className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Install Canvas Crafters
+              <h3 className="font-medium text-gray-900 dark:text-white text-sm">
+                Install App
               </h3>
             </div>
           </div>
@@ -125,22 +125,22 @@ const PWAInstallPrompt: React.FC = () => {
           </button>
         </div>
         
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-          Get faster access and a better experience with our app!
+        <p className="text-xs text-gray-600 dark:text-gray-300 mb-3">
+          Get faster access and offline capability
         </p>
         
         <div className="flex space-x-2">
           <button
             onClick={handleInstallClick}
-            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+            className="flex-1 bg-blue-600 text-white px-3 py-1.5 rounded text-xs font-medium hover:bg-blue-700 transition-colors"
           >
-            Install App
+            Install
           </button>
           <button
             onClick={handleDismiss}
-            className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
+            className="px-3 py-1.5 text-gray-600 dark:text-gray-300 text-xs hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
           >
-            Not now
+            Later
           </button>
         </div>
       </div>

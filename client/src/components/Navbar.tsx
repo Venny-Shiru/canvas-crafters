@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -10,14 +10,59 @@ import {
   Home, 
   Plus,
   Search,
-  Settings
+  Settings,
+  Download
 } from 'lucide-react';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+}
 
 const Navbar: React.FC = () => {
   const { state, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
+  // PWA install prompt handling
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      setShowInstallButton(true);
+    };
+
+    const handleAppInstalled = () => {
+      setDeferredPrompt(null);
+      setShowInstallButton(false);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    try {
+      await deferredPrompt.prompt();
+      const result = await deferredPrompt.userChoice;
+      if (result.outcome === 'accepted') {
+        setShowInstallButton(false);
+      }
+    } catch (error) {
+      console.error('Install error:', error);
+    }
+    setDeferredPrompt(null);
+  };
 
   const handleLogout = () => {
     logout();
@@ -87,6 +132,19 @@ const Navbar: React.FC = () => {
             <NavLink to="/contact">
               Contact
             </NavLink>
+            
+            {/* PWA Install Button */}
+            {showInstallButton && (
+              <button
+                onClick={handleInstallClick}
+                className="flex items-center space-x-2 px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-200 text-sm"
+                title="Install Canvas Crafters as an app"
+              >
+                <Download className="w-4 h-4" />
+                <span>Install App</span>
+              </button>
+            )}
+            
             {state.isAuthenticated ? (
               <div className="relative group">
                 <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200">

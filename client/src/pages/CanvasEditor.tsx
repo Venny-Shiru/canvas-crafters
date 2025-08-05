@@ -631,13 +631,27 @@ const CanvasEditor: React.FC = () => {
       input.accept = 'image/*';
       input.onchange = (e) => {
         const file = (e.target as HTMLInputElement).files?.[0];
-        if (file) {
+        if (file && contextRef.current) {
           const reader = new FileReader();
           reader.onload = (event) => {
             const img = new Image();
             img.onload = () => {
-              context.drawImage(img, x, y, img.width * 0.5, img.height * 0.5);
-              saveToUndoStack();
+              // Ensure we have a valid context
+              if (contextRef.current) {
+                // Scale image to fit reasonably on canvas
+                const maxWidth = 300;
+                const maxHeight = 300;
+                let { width, height } = img;
+                
+                if (width > maxWidth || height > maxHeight) {
+                  const ratio = Math.min(maxWidth / width, maxHeight / height);
+                  width *= ratio;
+                  height *= ratio;
+                }
+                
+                contextRef.current.drawImage(img, x - width/2, y - height/2, width, height);
+                saveToUndoStack();
+              }
             };
             img.src = event.target?.result as string;
           };
@@ -1647,7 +1661,7 @@ const CanvasEditor: React.FC = () => {
     { type: 'timer' as const, icon: <Circle className="w-5 h-5" />, name: 'Timer', category: 'Other' },
     { type: 'ruler' as const, icon: <Minus className="w-5 h-5" />, name: 'Ruler', category: 'Other' },
     { type: 'grid' as const, icon: <Square className="w-5 h-5" />, name: 'Grid', category: 'Other' },
-    { type: 'import-image' as const, icon: <PaintBucket className="w-5 h-5" />, name: 'Import Image', category: 'Other' }
+    { type: 'import-image' as const, icon: <Upload className="w-5 h-5" />, name: 'Import Image', category: 'Other' }
   ];
 
   if (loading) {

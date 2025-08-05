@@ -38,7 +38,7 @@ const PWAInstallPrompt: React.FC = () => {
           console.log('PWA Install: Showing install prompt');
           setShowInstallPrompt(true);
         }
-      }, 3000); // Reduced delay for testing
+      }, 1000); // Reduced delay for testing
     };
 
     // Listen for app installed event

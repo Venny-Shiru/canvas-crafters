@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
+import PWADebugPanel from './components/PWADebugPanel';
 
 // Pages
 import Home from './pages/Home';
@@ -165,6 +166,7 @@ function App() {
           </main>
           <Footer />
           <PWAInstallPrompt />
+          <PWADebugPanel />
         </div>
       </Router>
     </AuthProvider>

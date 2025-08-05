@@ -15,7 +15,7 @@ import { errorHandler, asyncHandler } from './middleware/errorHandler.js';
 import canvasSocket from './sockets/canvasSocket.js';
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 // CORS configuration function to handle all deployments
 const corsOrigins = (origin, callback) => {

@@ -100,11 +100,16 @@ userSchema.methods.toSafeObject = function() {
   
   // Convert relative avatar URLs to absolute URLs and fix localhost URLs
   if (userObject.avatar) {
-    // Fix existing localhost URLs to Railway URLs
+    // Fix existing localhost URLs to Railway URLs (for production)
     if (userObject.avatar.startsWith('http://localhost:5000')) {
       const path = userObject.avatar.replace('http://localhost:5000', '');
-      userObject.avatar = `https://canvas-crafters-production.up.railway.app${path}`;
-      console.log('Fixed localhost avatar URL to:', userObject.avatar);
+      if (process.env.NODE_ENV === 'production') {
+        userObject.avatar = `https://canvas-crafters-production.up.railway.app${path}`;
+        console.log('Fixed localhost avatar URL to:', userObject.avatar);
+      } else {
+        // Keep localhost URL for development
+        userObject.avatar = `http://localhost:5000${path}`;
+      }
     }
     // Convert relative URLs to absolute URLs
     else if (userObject.avatar.startsWith('/uploads/')) {

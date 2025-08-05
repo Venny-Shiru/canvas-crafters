@@ -76,13 +76,6 @@ interface DrawingTool {
   hardness?: number;
 }
 
-interface CanvasMode {
-  name: string;
-  type: 'whiteboard' | 'design' | 'brainstorm' | 'freehand';
-  tools: string[];
-  description: string;
-}
-
 interface StickyNote {
   id: string;
   x: number;
@@ -91,6 +84,20 @@ interface StickyNote {
   height: number;
   content: string;
   color: string;
+  user: string;
+}
+
+interface TextBox {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  content: string;
+  fontSize: number;
+  fontFamily: string;
+  color: string;
+  isEditing: boolean;
   user: string;
 }
 
@@ -237,8 +244,8 @@ const CanvasEditor: React.FC = () => {
   const [showUsers, setShowUsers] = useState(true);
   const [undoStack, setUndoStack] = useState<ImageData[]>([]);
   const [redoStack, setRedoStack] = useState<ImageData[]>([]);
-  const [canvasMode, setCanvasMode] = useState<'whiteboard' | 'design' | 'brainstorm' | 'freehand'>('whiteboard');
   const [stickyNotes, setStickyNotes] = useState<StickyNote[]>([]);
+  const [textBoxes, setTextBoxes] = useState<TextBox[]>([]);
   const [showGrid, setShowGrid] = useState(false);
   const [gridSize, setGridSize] = useState(20);
   const [snapToGrid, setSnapToGrid] = useState(false);
@@ -554,18 +561,9 @@ const CanvasEditor: React.FC = () => {
       return;
     }
 
-    // Handle text tool
+    // Handle text tool - create editable text boxes
     if (currentTool.type === 'text') {
-      const text = prompt('Enter text:');
-      if (text) {
-        context.save();
-        context.font = `${currentTool.size * 2}px Arial`;
-        context.fillStyle = currentTool.color;
-        context.globalAlpha = currentTool.opacity;
-        context.fillText(text, x, y);
-        context.restore();
-        saveToUndoStack();
-      }
+      addTextBox(x, y);
       return;
     }
 
@@ -1449,6 +1447,34 @@ const CanvasEditor: React.FC = () => {
     setStickyNotes(prev => [...prev, newNote]);
   };
 
+  // Text box functions
+  const addTextBox = (x: number, y: number) => {
+    const newTextBox: TextBox = {
+      id: Date.now().toString(),
+      x,
+      y,
+      width: 200,
+      height: 40,
+      content: 'Click to edit text',
+      fontSize: currentTool.size || 16,
+      fontFamily: 'Arial',
+      color: currentTool.color,
+      isEditing: false,
+      user: state.user?.username || 'Anonymous'
+    };
+    setTextBoxes(prev => [...prev, newTextBox]);
+  };
+
+  const updateTextBox = (id: string, updates: Partial<TextBox>) => {
+    setTextBoxes(prev => prev.map(textBox => 
+      textBox.id === id ? { ...textBox, ...updates } : textBox
+    ));
+  };
+
+  const deleteTextBox = (id: string) => {
+    setTextBoxes(prev => prev.filter(textBox => textBox.id !== id));
+  };
+
   const updateStickyNote = (id: string, updates: Partial<StickyNote>) => {
     setStickyNotes(prev => prev.map(note => 
       note.id === id ? { ...note, ...updates } : note
@@ -1483,25 +1509,6 @@ const CanvasEditor: React.FC = () => {
       ctx.lineTo(canvasRef.current!.width, y);
       ctx.stroke();
     }
-  };
-
-  // Mode-specific tool filtering - Now returns all tools for all modes
-  const getToolsForMode = (): string[] => {
-    // Return all available tool types so users have access to the full toolkit in any mode
-    return [
-      // Basic Drawing Tools
-      'brush', 'pencil', 'eraser',
-      // Advanced Brushes
-      'watercolor', 'airbrush', 'texture', 'oil', 'marker', 'chalk',
-      // Selection Tools
-      'lasso', 'magic-wand', 'select-rect', 'move', 'transform',
-      // Shape Tools
-      'line', 'circle', 'rectangle', 'polygon', 'star', 'arrow',
-      // Color & Fill Tools
-      'fill', 'gradient', 'eyedropper',
-      // Text & Other Tools
-      'text', 'sticky-note', 'laser-pointer', 'timer', 'ruler', 'grid', 'import-image'
-    ];
   };
 
   const saveCanvas = async () => {
@@ -1629,7 +1636,7 @@ const CanvasEditor: React.FC = () => {
     // Advanced Brushes
     { type: 'watercolor' as const, icon: <Droplet className="w-5 h-5" />, name: 'Watercolor', category: 'Artistic' },
     { type: 'airbrush' as const, icon: <Wind className="w-5 h-5" />, name: 'Airbrush', category: 'Artistic' },
-    { type: 'texture' as const, icon: <Layers className="w-5 h-5" />, name: 'Texture', category: 'Artistic' },
+    { type: 'texture' as const, icon: <Layers className="w-5 h-5" />, name: 'Texture Brush', category: 'Artistic' },
     { type: 'oil' as const, icon: <Palette className="w-5 h-5" />, name: 'Oil Paint', category: 'Artistic' },
     { type: 'marker' as const, icon: <Zap className="w-5 h-5" />, name: 'Marker', category: 'Artistic' },
     { type: 'chalk' as const, icon: <Target className="w-5 h-5" />, name: 'Chalk', category: 'Artistic' },
@@ -1638,7 +1645,7 @@ const CanvasEditor: React.FC = () => {
     { type: 'lasso' as const, icon: <Navigation className="w-5 h-5" />, name: 'Lasso Select', category: 'Selection' },
     { type: 'magic-wand' as const, icon: <Zap className="w-5 h-5" />, name: 'Magic Wand', category: 'Selection' },
     { type: 'select-rect' as const, icon: <Square className="w-5 h-5" />, name: 'Rectangle Select', category: 'Selection' },
-    { type: 'move' as const, icon: <Move className="w-5 h-5" />, name: 'Move', category: 'Selection' },
+    { type: 'move' as const, icon: <Move className="w-5 h-5" />, name: 'Move Tool', category: 'Selection' },
     { type: 'transform' as const, icon: <Scissors className="w-5 h-5" />, name: 'Transform', category: 'Selection' },
     
     // Shape Tools
@@ -1655,12 +1662,12 @@ const CanvasEditor: React.FC = () => {
     { type: 'eyedropper' as const, icon: <Droplet className="w-5 h-5" />, name: 'Eyedropper', category: 'Color' },
     
     // Text & Other
-    { type: 'text' as const, icon: <Type className="w-5 h-5" />, name: 'Text', category: 'Other' },
+    { type: 'text' as const, icon: <Type className="w-5 h-5" />, name: 'Text Box', category: 'Other' },
     { type: 'sticky-note' as const, icon: <Square className="w-5 h-5" />, name: 'Sticky Note', category: 'Other' },
     { type: 'laser-pointer' as const, icon: <Target className="w-5 h-5" />, name: 'Laser Pointer', category: 'Other' },
-    { type: 'timer' as const, icon: <Circle className="w-5 h-5" />, name: 'Timer', category: 'Other' },
+    { type: 'timer' as const, icon: <Circle className="w-5 h-5" />, name: 'Timestamp', category: 'Other' },
     { type: 'ruler' as const, icon: <Minus className="w-5 h-5" />, name: 'Ruler', category: 'Other' },
-    { type: 'grid' as const, icon: <Square className="w-5 h-5" />, name: 'Grid', category: 'Other' },
+    { type: 'grid' as const, icon: <Square className="w-5 h-5" />, name: 'Grid Toggle', category: 'Other' },
     { type: 'import-image' as const, icon: <Upload className="w-5 h-5" />, name: 'Import Image', category: 'Other' }
   ];
 
@@ -1717,18 +1724,9 @@ const CanvasEditor: React.FC = () => {
 
           {/* Center - Main actions */}
           <div className="flex items-center space-x-2">
-            {/* Canvas Mode Selector */}
-            <select
-              value={canvasMode}
-              onChange={(e) => setCanvasMode(e.target.value as 'whiteboard' | 'design' | 'brainstorm' | 'freehand')}
-              className="bg-gray-700 text-white px-3 py-2 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
-              title="Choose your canvas mode - all tools available in every mode"
-            >
-              <option value="whiteboard">📋 Whiteboard (Teaching & Presentations)</option>
-              <option value="design">🎨 Design (Creative Projects)</option>
-              <option value="brainstorm">💡 Brainstorm (Collaboration)</option>
-              <option value="freehand">✏️ Freehand (Artistic Drawing)</option>
-            </select>
+            <div className="text-white text-sm font-medium">
+              Canvas Editor - All Professional Tools Available
+            </div>
 
             {/* Grid Toggle */}
             <button
@@ -1829,10 +1827,7 @@ const CanvasEditor: React.FC = () => {
             
             {/* Group tools by category */}
             {['Basic', 'Artistic', 'Selection', 'Shapes', 'Color', 'Other'].map(category => {
-              const allowedTools = getToolsForMode();
-              const categoryTools = tools.filter(tool => 
-                tool.category === category && allowedTools.includes(tool.type)
-              );
+              const categoryTools = tools.filter(tool => tool.category === category);
               if (categoryTools.length === 0) return null;
               
               return (
@@ -2376,6 +2371,80 @@ const CanvasEditor: React.FC = () => {
                   </button>
                   <div className="absolute bottom-1 right-1 text-xs text-gray-500">
                     {note.user}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Text Boxes */}
+            {textBoxes.map(textBox => (
+              <div
+                key={textBox.id}
+                className="absolute bg-white border-2 border-blue-300 rounded shadow-lg cursor-move"
+                style={{
+                  left: textBox.x,
+                  top: textBox.y,
+                  width: textBox.width,
+                  height: textBox.height,
+                  fontSize: textBox.fontSize,
+                  fontFamily: textBox.fontFamily,
+                  color: textBox.color
+                }}
+                onMouseDown={(e) => {
+                  // Simple drag functionality
+                  e.preventDefault();
+                  const startX = e.clientX - textBox.x;
+                  const startY = e.clientY - textBox.y;
+                  
+                  const handleMouseMove = (moveEvent: MouseEvent) => {
+                    updateTextBox(textBox.id, {
+                      x: moveEvent.clientX - startX,
+                      y: moveEvent.clientY - startY
+                    });
+                  };
+                  
+                  const handleMouseUp = () => {
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                  };
+                  
+                  document.addEventListener('mousemove', handleMouseMove);
+                  document.addEventListener('mouseup', handleMouseUp);
+                }}
+                onDoubleClick={() => updateTextBox(textBox.id, { isEditing: true })}
+              >
+                <div className="p-2 h-full relative">
+                  {textBox.isEditing ? (
+                    <input
+                      type="text"
+                      value={textBox.content}
+                      onChange={(e) => updateTextBox(textBox.id, { content: e.target.value })}
+                      onBlur={() => updateTextBox(textBox.id, { isEditing: false })}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          updateTextBox(textBox.id, { isEditing: false });
+                        }
+                      }}
+                      className="w-full h-full bg-transparent border-none outline-none"
+                      autoFocus
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full cursor-text"
+                      onDoubleClick={() => updateTextBox(textBox.id, { isEditing: true })}
+                    >
+                      {textBox.content}
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={() => deleteTextBox(textBox.id)}
+                    className="absolute top-1 right-1 text-gray-500 hover:text-red-500 text-xs"
+                  >
+                    ×
+                  </button>
+                  <div className="absolute bottom-1 right-1 text-xs text-gray-500">
+                    {textBox.user}
                   </div>
                 </div>
               </div>

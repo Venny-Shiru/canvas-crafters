@@ -206,7 +206,7 @@ const Login: React.FC = () => {
               Want to try Canvas Crafters without creating an account?
             </p>
             <div className="text-xs text-blue-600 dark:text-blue-400 space-y-1">
-              <div><strong>Email:</strong> demo@example.com</div>
+              <div><strong>Email:</strong> demo@canvascrafters.com</div>
               <div><strong>Password:</strong> demo123</div>
             </div>
           </div>

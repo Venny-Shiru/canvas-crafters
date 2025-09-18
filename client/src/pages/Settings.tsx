@@ -110,7 +110,7 @@ const Settings: React.FC = () => {
   const fetchUserSettings = async () => {
     try {
       setLoading(true);
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/users/settings`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -131,7 +131,7 @@ const Settings: React.FC = () => {
   const handleSaveSettings = async () => {
     try {
       setSaving(true);
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/users/settings`, {
         method: 'PUT',
         headers: {
@@ -167,7 +167,7 @@ const Settings: React.FC = () => {
 
     try {
       setSaving(true);
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/auth/change-password`, {
         method: 'PUT',
         headers: {
@@ -212,7 +212,7 @@ const Settings: React.FC = () => {
     }
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/users/delete-account`, {
         method: 'DELETE',
         headers: {
@@ -239,7 +239,7 @@ const Settings: React.FC = () => {
       const formData = new FormData();
       formData.append('avatar', file);
       
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/auth/upload-avatar`, {
         method: 'POST',
         headers: {

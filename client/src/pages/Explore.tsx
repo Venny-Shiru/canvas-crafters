@@ -122,7 +122,7 @@ const Explore: React.FC = () => {
 
   const fetchFeaturedCanvases = async () => {
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/canvas?limit=6&sortBy=views`, {
         headers: state.isAuthenticated ? {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -146,7 +146,7 @@ const Explore: React.FC = () => {
 
   const fetchStats = async () => {
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/stats`, {
         headers: {
           'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ const Explore: React.FC = () => {
     if (!state.isAuthenticated) return;
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/canvas/${canvasId}/like`, {
         method: 'POST',
         headers: {

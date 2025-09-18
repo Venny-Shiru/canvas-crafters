@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
     try {
       console.log('Starting dashboard data fetch...');
       setLoading(true);
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       
       // Fetch user's canvases
       console.log('Fetching canvases...');
@@ -136,7 +136,7 @@ const Dashboard: React.FC = () => {
 
   const handleDeleteCanvas = async (canvasId: string) => {
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/canvas/${canvasId}`, {
         method: 'DELETE',
         headers: {
@@ -158,7 +158,7 @@ const Dashboard: React.FC = () => {
 
   const handleLikeCanvas = async (canvasId: string) => {
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_BASE_URL}/canvas/${canvasId}/like`, {
         method: 'POST',
         headers: {

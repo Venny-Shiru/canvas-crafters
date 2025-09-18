@@ -328,15 +328,18 @@ router.post('/upload-avatar', auth, (req, res, next) => {
 
     // Convert to absolute URL for response
     let baseUrl = process.env.SERVER_URL;
-    
+
+    // Use Render URL for production (current deployment)
+    if (!baseUrl && process.env.NODE_ENV === 'production') {
+      baseUrl = 'https://canvas-crafters.onrender.com';
+    }
+
+    // Fallback to Railway if Render URL not available
     if (!baseUrl && process.env.RAILWAY_PUBLIC_DOMAIN) {
       baseUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
     }
-    
-    if (!baseUrl && process.env.NODE_ENV === 'production') {
-      baseUrl = 'https://canvas-crafters-production.up.railway.app';
-    }
-    
+
+    // Development fallback
     if (!baseUrl) {
       baseUrl = 'http://localhost:5000';
     }

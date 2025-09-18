@@ -114,19 +114,22 @@ userSchema.methods.toSafeObject = function() {
     // Convert relative URLs to absolute URLs
     else if (userObject.avatar.startsWith('/uploads/')) {
       let baseUrl = process.env.SERVER_URL;
-      
+
+      // Use Render URL for production (current deployment)
+      if (!baseUrl && process.env.NODE_ENV === 'production') {
+        baseUrl = 'https://canvas-crafters.onrender.com';
+      }
+
+      // Fallback to Railway if Render URL not available
       if (!baseUrl && process.env.RAILWAY_PUBLIC_DOMAIN) {
         baseUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
       }
-      
-      if (!baseUrl && process.env.NODE_ENV === 'production') {
-        baseUrl = 'https://canvas-crafters-production.up.railway.app';
-      }
-      
+
+      // Development fallback
       if (!baseUrl) {
         baseUrl = 'http://localhost:5000';
       }
-      
+
       userObject.avatar = `${baseUrl}${userObject.avatar}`;
       console.log('Generated avatar URL:', userObject.avatar);
     }

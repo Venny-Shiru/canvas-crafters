@@ -3,7 +3,8 @@ import User from '../models/User.js';
 
 async function getTestUsers() {
   try {
-    await mongoose.connect('process.env.MONGODB_URI || \"mongodb://localhost:27017/canvas-crafters\"');
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/canvas-crafters';
+    await mongoose.connect(mongoUri);
     
     const users = await User.find({}).select('username email').limit(5);
     console.log('Available test users:');

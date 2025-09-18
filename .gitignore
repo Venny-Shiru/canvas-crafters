@@ -15,6 +15,9 @@ build/
 */dist/
 */build/
 
+# Explicitly ignore client build output
+client/dist/
+
 # Logs
 *.log
 npm-debug.log*

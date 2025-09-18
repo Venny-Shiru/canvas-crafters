@@ -9,6 +9,16 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000 # Render will set this automatically, but you can override if needed
+        value: 10000 # Render sets this automatically
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        value: https://canvas-crafters.netlify.app
+      - key: EMAIL_FROM
+        value: "Canvas Crafters <noreply@canvascrafters.com>"
+      - key: EMAIL_PASSWORD
+        sync: false
     autoDeploy: true
     rootDir: server

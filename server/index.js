@@ -124,6 +124,14 @@ app.use('/api/canvas', canvasRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/users', userRoutes); // Add plural route for settings compatibility
 
+// Root route for API server (optional, for clarity)
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    message: 'Canvas Crafters API root. See /api/health for status.'
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ 

@@ -107,6 +107,35 @@ app.use('/uploads', (req, res, next) => {
 }, express.static('server/uploads'));
 
 
+// Serve PWA static files (manifest.json, icons, etc.)
+app.use('/manifest.json', (req, res) => {
+  res.header('Content-Type', 'application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    // Serve the manifest.json from the client/public directory
+    res.sendFile('client/public/manifest.json', { root: '.' });
+  }
+});
+
+// Serve PWA icons
+app.use('/icons', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    // Serve icons from the client/public/icons directory
+    express.static('client/public/icons')(req, res, next);
+  }
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/canvas', canvasRoutes);

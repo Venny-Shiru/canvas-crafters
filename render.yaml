@@ -15,7 +15,7 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: CLIENT_URL
-        value: https://canvas-crafters.netlify.app
+        value: https://canvas-crafters-iwxr-qtp32huz2-venny-shirus-projects.vercel.app
       - key: EMAIL_FROM
         value: "Canvas Crafters <noreply@canvascrafters.com>"
       - key: EMAIL_PASSWORD

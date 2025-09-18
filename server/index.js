@@ -69,6 +69,14 @@ app.use(cors({
   credentials: true
 }));
 
+// Global OPTIONS handler for CORS preflight
+app.options('*', cors({
+  origin: corsOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

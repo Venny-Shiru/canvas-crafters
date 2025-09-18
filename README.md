@@ -4,11 +4,11 @@
 
 Canvas Crafters is a real-time collaborative digital canvas platform that enables artists, designers, and creative teams to work together seamlessly. Built with modern web technologies, it offers professional drawing tools with the power of real-time collaboration.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters.netlify.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://canvas-crafters.vercel.app)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Venny-Shiru/canvas-crafters)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-🌐 **Live Application**: [https://canvas-crafters.netlify.app](https://canvas-crafters.netlify.app)
+🌐 **Live Application**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
 
 🚀 **API Status**: Backend integrated with frontend (full-stack deployment)
 
@@ -48,7 +48,21 @@ Canvas Crafters is a real-time collaborative digital canvas platform that enable
 - Public gallery showcase
 - Contact and support system
 
-## 🆕 Recent Updates (August 2025)
+## 🆕 Recent Updates (September 2025)
+
+### ✅ **Demo Account & Testing Features** (September 18, 2025)
+- **Demo Account Created**: Pre-configured test account for easy platform exploration
+  - Email: `demo@canvascrafters.com`
+  - Username: `demo_user`
+  - Password: `demo123`
+- **Database Management Scripts**: Added scripts for user management and data maintenance
+- **Avatar URL Fixes**: Resolved avatar loading issues by updating URL generation to use Render deployment
+
+### ✅ **Deployment Infrastructure Updates** (September 2025)
+- **Vercel Frontend**: Migrated to Vercel for improved performance and reliability
+- **Render Backend**: Updated backend deployment to Render with optimized configuration
+- **Avatar System Fixes**: Corrected avatar URL generation for new deployment architecture
+- **Environment Variables**: Updated all configurations for current deployment setup
 
 ### ✅ **Latest Canvas Editor Enhancements** (August 7, 2025)
 - **Interactive Text Boxes**: Replaced basic text prompts with moveable, editable text boxes
@@ -62,13 +76,6 @@ Canvas Crafters is a real-time collaborative digital canvas platform that enable
 - **Better User Experience**: 2-second delay on install prompts, 72-hour dismissal period
 - **Enhanced Discoverability**: Install button integrated into main navigation
 - **Cleaner Interface**: Removed development debug information from production
-
-### ✅ **Successful Netlify Migration** (Previous Update)
-- **Resolved URL Corruption Issues**: Migrated from Vercel to Netlify for improved SPA routing
-- **Enhanced CORS Configuration**: Updated backend to support Netlify deployment
-- **Improved Build Process**: Streamlined environment variable injection
-- **Better Reliability**: Eliminated deployment routing issues
-- **Faster Deployment**: Optimized build configuration for Netlify
 
 ### ✅ **Enhanced Canvas Editor**
 - **30+ Professional Tools**: Complete redesign with industry-standard tools including artistic brushes, selection tools, and annotation features
@@ -186,6 +193,12 @@ canvas-crafters/
 │   │   └── canvas.js            # Canvas operations
 │   ├── sockets/            # Socket.io handlers
 │   │   └── canvasSocket.js      # Real-time collaboration
+│   ├── scripts/            # Database management scripts
+│   │   ├── createDemoUser.js    # Create demo account
+│   │   ├── fixAvatarUrls.js     # Fix avatar URL issues
+│   │   └── getTestUsers.js      # List test users
+│   ├── uploads/            # File uploads directory
+│   │   └── avatars/            # User avatar images
 │   └── index.js            # Server entry point
 ├── .env                    # Environment variables
 └── package.json            # Project dependencies and scripts
@@ -193,24 +206,34 @@ canvas-crafters/
 
 ## 🎯 Usage
 
+### 🚀 **Quick Test with Demo Account**
+Try Canvas Crafters instantly with our pre-configured demo account:
+- **Email**: `demo@canvascrafters.com`
+- **Password**: `demo123`
+- **Username**: `demo_user`
+
+Simply visit [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app) and log in with these credentials!
+
 ### For Artists & Designers
-1. **Sign up** for a free account
+1. **Sign up** for a free account (or use demo account above)
 2. **Create** a new canvas
 3. **Invite** collaborators via email or share link
-4. **Draw** together in real-time
-5. **Export** your masterpiece
+4. **Draw** together in real-time using 30+ professional tools
+5. **Export** your masterpiece in multiple formats
 
 ### For Teams
 1. **Set up** team workspace
 2. **Organize** projects and canvases
 3. **Collaborate** with advanced permissions
 4. **Track** progress with analytics
+5. **Use real-time collaboration features**
 
 ### For Educators
 1. **Create** classroom canvases
-2. **Assign** group projects
+2. **Assign** group projects with the demo account for testing
 3. **Monitor** student progress
 4. **Showcase** student work
+5. **Utilize interactive text and annotation tools**
 
 ## 🔧 Available Scripts
 
@@ -295,69 +318,79 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## 🚀 Deployment
 
-### ✅ **Live Deployment Status** (Updated August 2025)
+### ✅ **Live Deployment Status** (Updated September 2025)
 
 Your Canvas Crafters application is successfully deployed and running with the latest enhancements!
 
-**🚀 Frontend (Netlify)**: [https://canvas-crafters.netlify.app](https://canvas-crafters.netlify.app)
+**🚀 Frontend (Vercel)**: [https://canvas-crafters.vercel.app](https://canvas-crafters.vercel.app)
 - ✅ 30+ professional drawing tools with unified interface (August 7, 2025)
 - ✅ Interactive text boxes with inline editing and real-time collaboration
 - ✅ Enhanced PWA installation experience with improved user flow
-- ✅ Contact page with comprehensive support system  
+- ✅ Contact page with comprehensive support system
 - ✅ Site-wide footer with consistent navigation
 - ✅ Improved authentication flow with password reset
 - ✅ Responsive design optimized for all devices
 - ✅ Real-time collaboration features
-- ✅ Reliable SPA routing (no URL corruption issues)
+- ✅ Reliable SPA routing with Vercel configuration
 - ✅ Optimized environment variable injection
+- ✅ Demo account available for testing
 
-**🚂 Backend (Railway)**: [https://canvas-crafters-production.up.railway.app](https://canvas-crafters-production.up.railway.app)
+**🚂 Backend (Render)**: [https://canvas-crafters.onrender.com](https://canvas-crafters.onrender.com)
 - ✅ Enhanced authentication system with password reset
 - ✅ Improved user management and profile features
 - ✅ Advanced canvas operations and sharing
 - ✅ Socket.io real-time collaboration engine
 - ✅ JWT authentication with secure token handling
 - ✅ MongoDB Atlas integration
-- ✅ CORS configured for Netlify deployment
+- ✅ CORS configured for Vercel deployment
+- ✅ Fixed avatar URL generation for Render
 
 **🗄️ Database (MongoDB Atlas)**: Connected and operational
 - ✅ Enhanced user model with profile features
 - ✅ Advanced canvas data storage with metadata
 - ✅ Real-time data synchronization
 - ✅ Secure authentication and session management
+- ✅ Demo user account created for testing
 
 ### 🔧 Deployment Architecture
 
 ```
-Users → Netlify (Frontend) → Railway (Backend API) → MongoDB Atlas (Database)
-                               ↓
-                     Real-time Socket.io Communication
+Users → Vercel (Frontend) → Render (Backend API) → MongoDB Atlas (Database)
+                             ↓
+                   Real-time Socket.io Communication
 ```
 
 ### 🎯 Current Environment Variables
 
-**Production Environment (Netlify + Railway):**
+**Production Environment (Vercel + Render):**
 ```env
-VITE_API_URL=https://canvas-crafters-production.up.railway.app/api
-VITE_SOCKET_URL=https://canvas-crafters-production.up.railway.app
+VITE_API_URL=https://canvas-crafters.onrender.com/api
+VITE_SOCKET_URL=https://canvas-crafters.onrender.com
 VITE_APP_NAME=Canvas Crafters
 MONGODB_URI=mongodb+srv://[secured]
 JWT_SECRET=[secured]
 ```
 
-### 📊 Deployment Statistics (August 2025)
+**Demo Account for Testing:**
+```env
+Email: demo@canvascrafters.com
+Username: demo_user
+Password: demo123
+```
+
+### 📊 Deployment Statistics (September 2025)
 
 - **Build Time**: ~2-3 minutes per deployment
 - **Cold Start**: <2 seconds
-- **Global CDN**: Netlify Edge Network with global coverage
-- **Uptime**: 99.9% (Railway + Netlify SLA)
+- **Global CDN**: Vercel Edge Network with global coverage
+- **Uptime**: 99.9% (Render + Vercel SLA)
 - **Database**: MongoDB Atlas M0 (Free Tier) with 512MB storage
-- **Latest Deployment**: August 7, 2025 with enhanced canvas editor and improved user experience
+- **Latest Deployment**: September 18, 2025 with demo account and avatar fixes
 
 ### 💰 Current Hosting Costs
 
 - **Frontend (Vercel)**: $0/month (Hobby Plan - 100GB bandwidth)
-- **Backend (Railway)**: $0/month (Hobby Plan - 500 hours)
+- **Backend (Render)**: $0/month (Free Tier - 750 hours)
 - **Database (MongoDB Atlas)**: $0/month (Free M0 Cluster)
 - **Domain**: Free (vercel.app subdomain)
 - **Total**: **$0/month** - Completely free hosting! 🎉
@@ -366,10 +399,11 @@ JWT_SECRET=[secured]
 
 - **Automatic deployments** triggered on every push to `main` branch
 - **Frontend**: Vercel automatically rebuilds and deploys frontend from GitHub
-- **Backend**: Railway automatically rebuilds and deploys backend from GitHub  
+- **Backend**: Render automatically rebuilds and deploys backend from GitHub
 - **Preview deployments**: Vercel creates preview URLs for pull requests
 - **Environment management**: Secure environment variable handling
 - **Health monitoring**: Automatic error tracking and performance monitoring
+- **Demo account**: Pre-configured test account available for immediate testing
 
 ### 📈 Performance Optimizations (Latest Updates)
 

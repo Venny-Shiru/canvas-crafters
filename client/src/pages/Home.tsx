@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { 
-  Palette, 
-  Users, 
-  Zap, 
-  Globe, 
+import {
+  Palette,
+  Users,
+  Zap,
+  Globe,
   ArrowRight,
   CheckCircle,
   Star,
@@ -122,58 +122,54 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
-      {/* Hero Section - Updated gradient backgrounds */}
-      <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20">
+    <div className="min-h-screen dark:bg-gray-900 relative overflow-hidden">
+      {/* Artistic Background Elements */}
+      <div className="absolute inset-0 bg-artistic-gradient opacity-5"></div>
+      <div className="absolute top-20 left-10 w-72 h-72 bg-sunset-gradient rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+      <div className="absolute top-40 right-10 w-72 h-72 bg-ocean-gradient rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float-delayed"></div>
+      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-forest-gradient rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+
+      {/* Hero Section - Enhanced with artistic design */}
+      <section className="relative bg-gradient-to-br from-aurora-gradient via-white to-cosmic-gradient dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="relative mb-8">
-              <div className="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
-              <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-pink-400/20 to-blue-400/20 rounded-full blur-xl"></div>
-
-              <h1 className="relative text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 mb-4 leading-tight">
-                Create.
-              </h1>
-              <h1 className="relative text-4xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:from-purple-400 dark:via-pink-400 dark:to-blue-400 mb-4 leading-tight">
-                Collaborate.
-              </h1>
-              <h1 className="relative text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400">
-                  Craft Together.
-                </span>
-              </h1>
-
-              <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-br from-green-400 to-blue-500 rounded-full animate-pulse delay-1000"></div>
+          <div className="text-center relative z-10">
+            {/* Artistic decorative elements */}
+            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full"></div>
             </div>
+
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-black text-transparent bg-clip-text bg-artistic-gradient mb-6 leading-tight animate-gradient">
+              Create. Collaborate.
+              <span className="block text-4xl md:text-6xl lg:text-7xl font-artistic font-normal text-purple-600 dark:text-purple-400 mt-2">
+                Craft Together.
+              </span>
+            </h1>
+
             <div className="max-w-4xl mx-auto mb-12">
-              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 font-medium leading-relaxed">
+              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 font-body leading-relaxed">
                 The ultimate digital canvas platform for artists, designers, and creative teams.
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-400 font-body">
                 Draw, design, and collaborate in real-time with powerful tools and seamless sharing.
               </p>
-              <div className="flex items-center justify-center mt-6 space-x-2">
-                <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
-                <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse delay-75"></div>
-                <div className="w-2 h-2 bg-gradient-to-r from-pink-500 to-blue-500 rounded-full animate-pulse delay-150"></div>
-              </div>
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               {state.isAuthenticated ? (
                 <>
                   <Link
                     to="/canvas/new"
-                    className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center"
+                    className="group bg-artistic-gradient text-white px-10 py-4 rounded-2xl text-xl font-bold hover:shadow-artistic-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center glow"
                   >
+                    <Palette className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
                     Start Creating
-                    <ArrowRight className="ml-2 w-5 h-5" />
+                    <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     to="/explore"
-                    className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors duration-200"
+                    className="group border-3 border-purple-500 text-purple-600 px-10 py-4 rounded-2xl text-xl font-bold hover:bg-purple-500 hover:text-white transition-all duration-300 hover:shadow-artistic"
                   >
+                    <Users className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
                     Explore Canvases
                   </Link>
                 </>
@@ -181,15 +177,17 @@ const Home: React.FC = () => {
                 <>
                   <Link
                     to="/register"
-                    className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center"
+                    className="group bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white px-10 py-4 rounded-2xl text-xl font-bold hover:shadow-artistic-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center glow"
                   >
+                    <Star className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
                     Get Started Free
-                    <ArrowRight className="ml-2 w-5 h-5" />
+                    <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     to="/explore"
-                    className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors duration-200"
+                    className="group border-3 border-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 px-10 py-4 rounded-2xl text-xl font-bold hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 hover:text-white transition-all duration-300 hover:shadow-artistic"
                   >
+                    <Play className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
                     View Demo
                   </Link>
                 </>
@@ -197,9 +195,9 @@ const Home: React.FC = () => {
             </div>
 
             {/* Interactive Canvas Preview Slideshow */}
-            <div className="mt-16 relative">
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 mx-auto max-w-4xl">
-                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-lg relative overflow-hidden">
+            <div className="mt-20 relative">
+              <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-artistic-lg p-6 mx-auto max-w-5xl border border-white/20">
+                <div className="aspect-video bg-gradient-to-br from-aurora-gradient to-cosmic-gradient rounded-2xl relative overflow-hidden shadow-inner">
                   {/* Slideshow Images */}
                   <div className="absolute inset-0">
                     {slideshowSlides.map((slide, index) => (
@@ -268,7 +266,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Floating elements */}
               <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 hidden lg:block">
                 <div className="flex items-center space-x-2">
@@ -278,7 +276,7 @@ const Home: React.FC = () => {
                   </span>
                 </div>
               </div>
-              
+
               <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 hidden lg:block">
                 <div className="flex items-center space-x-2">
                   <Star className="w-4 h-4 text-yellow-500 fill-current" />
@@ -291,28 +289,39 @@ const Home: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Everything You Need to Create
+      <section className="py-24 bg-gradient-to-br from-white via-purple-50 to-pink-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-10 right-10 w-32 h-32 bg-ocean-gradient rounded-full opacity-10 animate-float"></div>
+        <div className="absolute bottom-10 left-10 w-24 h-24 bg-forest-gradient rounded-full opacity-10 animate-float-delayed"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block p-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-6">
+              <div className="bg-white dark:bg-gray-800 rounded-full px-6 py-2">
+                <span className="text-purple-600 font-artistic text-lg">✨ Everything You Need</span>
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-transparent bg-clip-text bg-artistic-gradient mb-6">
+              To Create Masterpieces
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Professional-grade tools meet seamless collaboration in one powerful platform
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-body leading-relaxed">
+              Professional-grade tools meet seamless collaboration in one powerful, beautifully designed platform
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center group">
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-6 group-hover:bg-gray-100 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                  <div className="flex justify-center mb-4">
-                    {feature.icon}
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 group-hover:bg-white dark:group-hover:bg-gray-800 transition-all duration-300 shadow-artistic group-hover:shadow-artistic-lg transform group-hover:-translate-y-2 border border-white/50 dark:border-gray-700/50">
+                  <div className="flex justify-center mb-6">
+                    <div className="p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      {feature.icon}
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-2xl font-display font-bold text-gray-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-gray-600 dark:text-gray-300 font-body leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -409,55 +418,81 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-700">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Start Creating?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Join thousands of artists and designers who are already using Canvas Crafters
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <section className="py-24 bg-gradient-to-br from-artistic-gradient via-sunset-gradient to-ocean-gradient relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full animate-float"></div>
+          <div className="absolute bottom-10 right-10 w-48 h-48 bg-white/5 rounded-full animate-float-delayed"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full animate-pulse-slow"></div>
+        </div>
+
+        <div className="max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-8">
+            <div className="inline-block p-1 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+              <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
+                <span className="text-white font-artistic text-xl">🎨 Ready to Create?</span>
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 leading-tight">
+              Start Your Creative Journey
+            </h2>
+            <p className="text-xl md:text-2xl text-white/90 mb-12 font-body leading-relaxed max-w-3xl mx-auto">
+              Join thousands of artists and designers who are already creating masterpieces with Canvas Crafters
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             {state.isAuthenticated ? (
               <Link
                 to="/canvas/new"
-                className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center"
+                className="group bg-white text-purple-600 px-10 py-4 rounded-2xl text-xl font-bold hover:bg-gray-100 transition-all duration-300 flex items-center justify-center shadow-artistic-lg transform hover:-translate-y-1 glow"
               >
+                <Palette className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
                 Create Your First Canvas
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Link>
             ) : (
               <>
                 <Link
                   to="/register"
-                  className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center"
+                  className="group bg-white text-purple-600 px-10 py-4 rounded-2xl text-xl font-bold hover:bg-gray-100 transition-all duration-300 flex items-center justify-center shadow-artistic-lg transform hover:-translate-y-1 glow"
                 >
+                  <Star className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
                   Sign Up Free
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/login"
-                  className="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-200"
+                  className="group border-3 border-white text-white px-10 py-4 rounded-2xl text-xl font-bold hover:bg-white hover:text-purple-600 transition-all duration-300 shadow-artistic transform hover:-translate-y-1"
                 >
+                  <Users className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
                   Log In
                 </Link>
               </>
             )}
           </div>
 
-          <div className="mt-8 flex items-center justify-center space-x-6 text-blue-100">
-            <div className="flex items-center">
-              <CheckCircle className="w-5 h-5 mr-2" />
-              <span>Free to start</span>
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div className="flex items-center justify-center mb-4">
+                <CheckCircle className="w-8 h-8 text-green-300" />
+              </div>
+              <h3 className="text-white font-display font-bold text-lg mb-2">Free to Start</h3>
+              <p className="text-white/80 font-body">No upfront costs or hidden fees</p>
             </div>
-            <div className="flex items-center">
-              <CheckCircle className="w-5 h-5 mr-2" />
-              <span>No credit card required</span>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div className="flex items-center justify-center mb-4">
+                <CheckCircle className="w-8 h-8 text-green-300" />
+              </div>
+              <h3 className="text-white font-display font-bold text-lg mb-2">No Credit Card</h3>
+              <p className="text-white/80 font-body">Sign up without payment information</p>
             </div>
-            <div className="flex items-center">
-              <CheckCircle className="w-5 h-5 mr-2" />
-              <span>Unlimited canvases</span>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div className="flex items-center justify-center mb-4">
+                <CheckCircle className="w-8 h-8 text-green-300" />
+              </div>
+              <h3 className="text-white font-display font-bold text-lg mb-2">Unlimited Canvases</h3>
+              <p className="text-white/80 font-body">Create as many projects as you want</p>
             </div>
           </div>
         </div>

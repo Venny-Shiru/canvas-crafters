@@ -127,14 +127,38 @@ const Home: React.FC = () => {
       <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Create. Collaborate. 
-              <span className="text-blue-600 dark:text-blue-400 block">Craft Together.</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              The ultimate digital canvas platform for artists, designers, and creative teams. 
-              Draw, design, and collaborate in real-time with powerful tools and seamless sharing.
-            </p>
+            <div className="relative mb-8">
+              <div className="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl"></div>
+              <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-pink-400/20 to-blue-400/20 rounded-full blur-xl"></div>
+
+              <h1 className="relative text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 mb-4 leading-tight">
+                Create.
+              </h1>
+              <h1 className="relative text-4xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:from-purple-400 dark:via-pink-400 dark:to-blue-400 mb-4 leading-tight">
+                Collaborate.
+              </h1>
+              <h1 className="relative text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400">
+                  Craft Together.
+                </span>
+              </h1>
+
+              <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-br from-green-400 to-blue-500 rounded-full animate-pulse delay-1000"></div>
+            </div>
+            <div className="max-w-4xl mx-auto mb-12">
+              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4 font-medium leading-relaxed">
+                The ultimate digital canvas platform for artists, designers, and creative teams.
+              </p>
+              <p className="text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+                Draw, design, and collaborate in real-time with powerful tools and seamless sharing.
+              </p>
+              <div className="flex items-center justify-center mt-6 space-x-2">
+                <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse delay-75"></div>
+                <div className="w-2 h-2 bg-gradient-to-r from-pink-500 to-blue-500 rounded-full animate-pulse delay-150"></div>
+              </div>
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {state.isAuthenticated ? (

@@ -95,9 +95,14 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 font-bold text-xl text-blue-600 dark:text-blue-400">
-            <Palette className="w-8 h-8" />
-            <span>Canvas Crafters</span>
+          <Link to="/" className="flex items-center space-x-3 font-black text-2xl group">
+            <div className="relative">
+              <Palette className="w-10 h-10 text-transparent bg-clip-text bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 group-hover:scale-110 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 group-hover:from-pink-600 group-hover:via-purple-600 group-hover:to-blue-600 dark:group-hover:from-pink-400 dark:group-hover:via-purple-400 dark:group-hover:to-blue-400 transition-all duration-300">
+              Canvas Crafters
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

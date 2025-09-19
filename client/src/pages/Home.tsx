@@ -418,25 +418,24 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-artistic-gradient via-sunset-gradient to-ocean-gradient relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full animate-float"></div>
-          <div className="absolute bottom-10 right-10 w-48 h-48 bg-white/5 rounded-full animate-float-delayed"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full animate-pulse-slow"></div>
+      <section className="py-24 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/20 via-transparent to-blue-500/20"></div>
+          <div className="absolute top-20 right-20 w-32 h-32 bg-white/5 rounded-full"></div>
+          <div className="absolute bottom-20 left-20 w-24 h-24 bg-white/5 rounded-full"></div>
         </div>
 
         <div className="max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-8">
-            <div className="inline-block p-1 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
-              <div className="bg-white/10 backdrop-blur-sm rounded-full px-6 py-2">
-                <span className="text-white font-artistic text-xl">🎨 Ready to Create?</span>
-              </div>
+            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-8 border border-white/20">
+              <Palette className="w-5 h-5 text-purple-300" />
+              <span className="text-white font-semibold text-lg">Ready to Create?</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 leading-tight drop-shadow-lg">
               Start Your Creative Journey
             </h2>
-            <p className="text-xl md:text-2xl text-white/90 mb-12 font-body leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/95 mb-12 font-body leading-relaxed max-w-3xl mx-auto drop-shadow-sm">
               Join thousands of artists and designers who are already creating masterpieces with Canvas Crafters
             </p>
           </div>
